@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Conversor de Unidades Online Gratis | HerramientasPro</title>
+  <meta name="description" content="Convierte entre unidades de longitud, peso, temperatura, área, volumen y velocidad online gratis. Conversión instantánea. Sin registro.">
+  <meta name="keywords" content="conversor unidades, convertir metros pies, kilogramos libras, celsius fahrenheit, conversor online">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles/main.css">
+</head>
+<body>
+  <header class="site-header" id="site-header"></header>
+  <main class="container">
+    <div class="tool-page">
+      <div class="tool-main">
+        <div class="ad-banner" id="ad-top"></div>
+        <nav class="breadcrumb"><a href="/">Inicio</a> › <span>Conversor de Unidades</span></nav>
+        <div class="tool-header">
+          <h1>📐 Conversor de Unidades</h1>
+          <p>Convierte entre unidades de longitud, peso, temperatura, área, volumen y velocidad al instante.</p>
+        </div>
+
+        <!-- Category tabs -->
+        <div style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1.5rem" id="cat-tabs"></div>
+
+        <div class="tool-box">
+          <div class="tool-box-header"><h2 id="cat-title">Longitud</h2></div>
+          <div class="tool-box-body">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Valor</label>
+                <input type="number" id="val-in" class="form-input" placeholder="0" oninput="convert()" step="any" value="1">
+              </div>
+              <div class="form-group">
+                <label class="form-label">De</label>
+                <select id="unit-from" class="form-input" onchange="convert()"></select>
+              </div>
+              <div class="form-group" style="display:flex;flex-direction:column;justify-content:flex-end">
+                <button class="btn btn-secondary" onclick="swapUnits()" style="height:42px">⇄</button>
+              </div>
+              <div class="form-group">
+                <label class="form-label">A</label>
+                <select id="unit-to" class="form-input" onchange="convert()"></select>
+              </div>
+            </div>
+
+            <div class="output-box" style="font-size:1.3rem;font-weight:700;min-height:60px;display:flex;align-items:center">
+              <button class="copy-btn" id="copy-btn" onclick="copyResult()">Copiar</button>
+              <span id="result-val">—</span>
+            </div>
+
+            <!-- All conversions table -->
+            <div style="margin-top:1.5rem">
+              <label class="form-label">Tabla completa de conversiones</label>
+              <div id="all-table" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:0.5rem;margin-top:0.5rem"></div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;justify-content:center;margin:1.5rem 0">
+          <div class="ad-rectangle" id="ad-mid"></div>
+        </div>
+
+        <div class="related-tools">
+          <h2 class="section-title" style="font-size:1rem">Herramientas relacionadas</h2>
+          <div class="tools-grid" style="grid-template-columns:repeat(auto-fill,minmax(180px,1fr))">
+            <a class="tool-card" href="conversor-bytes.html"><span class="tool-icon">💾</span><h3>Conversor Bytes</h3><p>KB, MB, GB, TB.</p><span class="tool-link">Usar →</span></a>
+            <a class="tool-card" href="conversor-tiempo.html"><span class="tool-icon">⏱️</span><h3>Conversor Tiempo</h3><p>Segundos a días y más.</p><span class="tool-link">Usar →</span></a>
+            <a class="tool-card" href="porcentajes.html"><span class="tool-icon">💯</span><h3>Porcentajes</h3><p>Calcula porcentajes.</p><span class="tool-link">Usar →</span></a>
+          </div>
+        </div>
+      </div>
+      <aside class="tool-sidebar"><div class="ad-sidebar" id="ad-sidebar"></div></aside>
+    </div>
+  </main>
+  <footer class="site-footer" id="site-footer"></footer>
+  <script src="../js/app.js"></script>
+  <script>
+    const CATEGORIES = {
+      'Longitud': {
+        units: {
+          'Kilómetro (km)':1000,'Metro (m)':1,'Centímetro (cm)':0.01,'Milímetro (mm)':0.001,
+          'Milla (mi)':1609.344,'Yarda (yd)':0.9144,'Pie (ft)':0.3048,'Pulgada (in)':0.0254,
+          'Milla náutica':1852,'Micrómetro (µm)':0.000001
+        }
+      },
+      'Peso': {
+        units: {
+          'Tonelada métrica (t)':1000000,'Kilogramo (kg)':1000,'Gramo (g)':1,'Miligramo (mg)':0.001,
+          'Libra (lb)':453.592,'Onza (oz)':28.3495,'Piedra (st)':6350.29,'Tonelada corta':907185
+        }
+      },
+      'Temperatura': { special: true,
+        units: ['Celsius (°C)','Fahrenheit (°F)','Kelvin (K)','Rankine (°R)']
+      },
+      'Área': {
+        units: {
+          'km²':1e6,'Hectárea (ha)':1e4,'Metro² (m²)':1,'Centímetro² (cm²)':0.0001,
+          'Milla²':2589988.11,'Acre':4046.86,'Pie²':0.092903,'Pulgada²':0.00064516
+        }
+      },
+      'Volumen': {
+        units: {
+          'Metro³ (m³)':1000,'Litro (L)':1,'Mililitro (mL)':0.001,'Centímetro³':0.001,
+          'Galón US':3.78541,'Cuarto US':0.946353,'Pinta US':0.473176,'Taza US':0.236588,
+          'Onza líquida US':0.0295735,'Galón UK':4.54609
+        }
+      },
+      'Velocidad': {
+        units: {
+          'km/h':1,'m/s':3.6,'mph':1.60934,'Nudo':1.852,'Mach':1225.044,'Pie/s':1.09728
+        }
+      },
+      'Datos': {
+        units: {
+          'Bit':0.125,'Byte':1,'Kilobyte (KB)':1024,'Megabyte (MB)':1048576,
+          'Gigabyte (GB)':1073741824,'Terabyte (TB)':1099511627776
+        }
+      }
+    };
+
+    let currentCat = 'Longitud';
+
+    function convertTemp(val, from, to) {
+      let c;
+      if(from==='Celsius (°C)')c=val;
+      else if(from==='Fahrenheit (°F)')c=(val-32)*5/9;
+      else if(from==='Kelvin (K)')c=val-273.15;
+      else c=val*5/9-273.15;
+      if(to==='Celsius (°C)')return c;
+      if(to==='Fahrenheit (°F)')return c*9/5+32;
+      if(to==='Kelvin (K)')return c+273.15;
+      return (c+273.15)*9/5;
+    }
+
+    function formatNum(n){
+      if(n===null||isNaN(n))return'—';
+      if(Math.abs(n)>=0.001&&Math.abs(n)<1e10)return+parseFloat(n.toPrecision(10)).toLocaleString('es',{maximumFractionDigits:8});
+      return n.toExponential(5);
+    }
+
+    function setCat(cat) {
+      currentCat = cat;
+      document.getElementById('cat-title').textContent = cat;
+      document.querySelectorAll('#cat-tabs button').forEach(b=>{
+        b.className=b.dataset.cat===cat?'btn btn-primary':'btn btn-secondary';
+      });
+      const data = CATEGORIES[cat];
+      const units = data.special ? data.units : Object.keys(data.units);
+      const from = document.getElementById('unit-from');
+      const to = document.getElementById('unit-to');
+      from.innerHTML = to.innerHTML = units.map(u=>`<option value="${u}">${u}</option>`).join('');
+      to.selectedIndex = 1;
+      convert();
+    }
+
+    function convert() {
+      const val = parseFloat(document.getElementById('val-in').value);
+      const from = document.getElementById('unit-from').value;
+      const to = document.getElementById('unit-to').value;
+      const data = CATEGORIES[currentCat];
+
+      if(isNaN(val)){document.getElementById('result-val').textContent='—';return;}
+
+      let result;
+      if(data.special) {
+        result = convertTemp(val, from, to);
+      } else {
+        const base = val * data.units[from];
+        result = base / data.units[to];
+      }
+
+      document.getElementById('result-val').textContent = formatNum(result) + ' ' + to.split(' ')[0];
+
+      // All conversions table
+      const units = data.special ? data.units : Object.keys(data.units);
+      const html = units.map(u => {
+        let r;
+        if(data.special) r = convertTemp(val, from, u);
+        else r = (val * data.units[from]) / data.units[u];
+        return `<div style="background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:0.5rem 0.75rem">
+          <div style="font-size:0.75rem;color:var(--text3)">${u}</div>
+          <div style="font-size:0.9rem;font-weight:700;color:${u===to?'var(--accent)':'var(--text)'}">${formatNum(r)}</div>
+        </div>`;
+      }).join('');
+      document.getElementById('all-table').innerHTML = html;
+    }
+
+    function swapUnits() {
+      const from = document.getElementById('unit-from');
+      const to = document.getElementById('unit-to');
+      const tmp = from.value;
+      from.value = to.value;
+      to.value = tmp;
+      convert();
+    }
+
+    function copyResult() {
+      copyText(document.getElementById('result-val').textContent, document.getElementById('copy-btn'));
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const tabs = document.getElementById('cat-tabs');
+      Object.keys(CATEGORIES).forEach(cat => {
+        const btn = document.createElement('button');
+        btn.className = 'btn btn-secondary';
+        btn.dataset.cat = cat;
+        btn.textContent = cat;
+        btn.onclick = () => setCat(cat);
+        tabs.appendChild(btn);
+      });
+      setCat('Longitud');
+    });
+  </script>
+</body>
+</html>

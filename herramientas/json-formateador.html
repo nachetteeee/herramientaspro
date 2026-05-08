@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Validador y Formateador JSON Online Gratis | HerramientasPro</title>
+  <meta name="description" content="Valida, formatea y minifica JSON online gratis. Resaltado de errores, indentación configurable y conversión a minificado. Sin registro.">
+  <meta name="keywords" content="validador json, formateador json, json online, prettify json, minificar json, json viewer">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles/main.css">
+  <style>
+    .json-key    { color: #93c5fd; }
+    .json-string { color: #86efac; }
+    .json-number { color: #fcd34d; }
+    .json-bool   { color: #f9a8d4; }
+    .json-null   { color: #94a3b8; }
+    #json-output {
+      font-family: 'Cascadia Code','Fira Code','Courier New',monospace;
+      font-size:0.85rem;
+      white-space: pre;
+      overflow-x: auto;
+      min-height: 200px;
+      color: var(--text);
+      position: relative;
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header" id="site-header"></header>
+
+  <main class="container">
+    <div class="tool-page">
+      <div class="tool-main">
+        <div class="ad-banner" id="ad-top"></div>
+
+        <nav class="breadcrumb">
+          <a href="/">Inicio</a> › <span>Validador JSON</span>
+        </nav>
+
+        <div class="tool-header">
+          <h1>📋 Validador y Formateador JSON</h1>
+          <p>Valida si tu JSON es correcto, formatea con indentación configurable o minifica para producción.</p>
+        </div>
+
+        <!-- Status chip -->
+        <div id="status-chip" style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.35rem 0.9rem;border-radius:50px;font-size:0.8rem;font-weight:700;background:var(--bg2);border:1px solid var(--border);color:var(--text3);margin-bottom:1rem">
+          ⬤ Esperando JSON
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem">
+          <!-- Input -->
+          <div class="tool-box">
+            <div class="tool-box-header">
+              <h2>Entrada JSON</h2>
+              <div style="display:flex;gap:0.4rem">
+                <button class="btn btn-secondary" style="font-size:0.75rem;padding:0.3rem 0.6rem" onclick="pasteExample()">Ejemplo</button>
+                <button class="btn btn-secondary" style="font-size:0.75rem;padding:0.3rem 0.6rem" onclick="clearJSON()">Limpiar</button>
+              </div>
+            </div>
+            <div class="tool-box-body" style="padding:0">
+              <textarea id="json-input" class="form-textarea"
+                style="border:none;border-radius:0;min-height:360px;font-size:0.85rem;resize:none"
+                placeholder='Pega tu JSON aquí...'
+                oninput="processJSON()"
+                spellcheck="false"
+              ></textarea>
+            </div>
+          </div>
+
+          <!-- Output -->
+          <div class="tool-box">
+            <div class="tool-box-header">
+              <h2>Resultado</h2>
+              <button class="copy-btn" style="position:static" id="copy-btn" onclick="copyJSON()">Copiar</button>
+            </div>
+            <div class="tool-box-body" style="padding:0">
+              <div id="json-output" class="output-box"
+                style="border:none;border-radius:0;min-height:360px;padding:1rem;">
+                El resultado aparecerá aquí...
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Controls -->
+        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:0.75rem;margin-top:1rem">
+          <label class="form-label" style="margin:0">Indentación:</label>
+          <select id="indent" class="form-input" style="width:auto;padding:0.4rem 0.75rem" onchange="processJSON()">
+            <option value="2" selected>2 espacios</option>
+            <option value="4">4 espacios</option>
+            <option value="tab">Tab</option>
+          </select>
+          <button class="btn btn-primary" onclick="processJSON()">✔ Formatear</button>
+          <button class="btn btn-secondary" onclick="minifyJSON()">⚡ Minificar</button>
+          <button class="btn btn-secondary" onclick="sortKeys()">↕ Ordenar claves</button>
+        </div>
+
+        <!-- Error display -->
+        <div id="json-error" style="background:rgba(239,68,68,0.1);border:1px solid var(--error);border-radius:var(--radius-sm);padding:0.75rem 1rem;margin-top:1rem;font-size:0.875rem;color:var(--error);display:none"></div>
+
+        <!-- Stats -->
+        <div class="stats-row" style="margin-top:1rem">
+          <div class="stat-chip"><strong id="j-keys">—</strong>Claves</div>
+          <div class="stat-chip"><strong id="j-depth">—</strong>Profundidad</div>
+          <div class="stat-chip"><strong id="j-size">—</strong>Tamaño</div>
+          <div class="stat-chip"><strong id="j-mini">—</strong>Minificado</div>
+        </div>
+
+        <div style="display:flex;justify-content:center;margin:1.5rem 0">
+          <div class="ad-rectangle" id="ad-mid"></div>
+        </div>
+
+        <div class="related-tools">
+          <h2 class="section-title" style="font-size:1rem">Herramientas relacionadas</h2>
+          <div class="tools-grid" style="grid-template-columns:repeat(auto-fill,minmax(180px,1fr))">
+            <a class="tool-card" href="base64.html"><span class="tool-icon">🔄</span><h3>Base64</h3><p>Codifica datos en Base64.</p><span class="tool-link">Usar →</span></a>
+            <a class="tool-card" href="url-encoder.html"><span class="tool-icon">🔗</span><h3>URL Encoder</h3><p>Codifica URLs.</p><span class="tool-link">Usar →</span></a>
+            <a class="tool-card" href="minificador.html"><span class="tool-icon">⚡</span><h3>Minificador</h3><p>Minifica CSS y JS.</p><span class="tool-link">Usar →</span></a>
+          </div>
+        </div>
+      </div>
+      <aside class="tool-sidebar">
+        <div class="ad-sidebar" id="ad-sidebar"></div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="site-footer" id="site-footer"></footer>
+  <script src="../js/app.js"></script>
+  <script>
+    let lastParsed = null;
+
+    function getIndent() {
+      const v = document.getElementById('indent').value;
+      return v === 'tab' ? '\t' : parseInt(v);
+    }
+
+    function countKeys(obj, depth = 0) {
+      if (typeof obj !== 'object' || obj === null) return { keys: 0, depth };
+      let keys = 0, maxDepth = depth;
+      for (const k in obj) {
+        keys++;
+        const child = countKeys(obj[k], depth + 1);
+        keys += child.keys;
+        maxDepth = Math.max(maxDepth, child.depth);
+      }
+      return { keys, depth: maxDepth };
+    }
+
+    function syntaxHighlight(json) {
+      return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, (m) => {
+        let cls = 'json-number';
+        if (/^"/.test(m)) cls = /:$/.test(m) ? 'json-key' : 'json-string';
+        else if (/true|false/.test(m)) cls = 'json-bool';
+        else if (/null/.test(m)) cls = 'json-null';
+        return `<span class="${cls}">${m.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</span>`;
+      });
+    }
+
+    function processJSON() {
+      const raw = document.getElementById('json-input').value.trim();
+      const errEl = document.getElementById('json-error');
+      const chip = document.getElementById('status-chip');
+      errEl.style.display = 'none';
+
+      if (!raw) {
+        document.getElementById('json-output').innerHTML = 'El resultado aparecerá aquí...';
+        chip.innerHTML = '⬤ Esperando JSON';
+        chip.style.cssText += ';color:var(--text3);border-color:var(--border)';
+        lastParsed = null;
+        updateStats(null, 0, 0);
+        return;
+      }
+
+      try {
+        const parsed = JSON.parse(raw);
+        lastParsed = parsed;
+        const formatted = JSON.stringify(parsed, null, getIndent());
+        document.getElementById('json-output').innerHTML = syntaxHighlight(formatted.replace(/&/g,'&amp;'));
+        chip.innerHTML = '✔ JSON válido';
+        chip.style.color = 'var(--success)';
+        chip.style.borderColor = 'var(--success)';
+
+        const { keys, depth } = countKeys(parsed);
+        const mini = JSON.stringify(parsed);
+        updateStats(keys, depth, raw.length, mini.length);
+      } catch (e) {
+        lastParsed = null;
+        const msg = e.message;
+        errEl.innerHTML = '⚠ <strong>Error de sintaxis:</strong> ' + msg;
+        errEl.style.display = 'block';
+        document.getElementById('json-output').textContent = raw;
+        chip.innerHTML = '✘ JSON inválido';
+        chip.style.color = 'var(--error)';
+        chip.style.borderColor = 'var(--error)';
+        updateStats(null, null, raw.length, null);
+      }
+    }
+
+    function updateStats(keys, depth, size, miniSize) {
+      document.getElementById('j-keys').textContent = keys !== null ? keys.toLocaleString('es') : '—';
+      document.getElementById('j-depth').textContent = depth !== null ? depth : '—';
+      document.getElementById('j-size').textContent = size ? formatBytes(size) : '—';
+      document.getElementById('j-mini').textContent = miniSize ? formatBytes(miniSize) : '—';
+    }
+
+    function formatBytes(b) {
+      if (b < 1024) return b + ' B';
+      return (b / 1024).toFixed(1) + ' KB';
+    }
+
+    function minifyJSON() {
+      if (!lastParsed) { processJSON(); return; }
+      const mini = JSON.stringify(lastParsed);
+      document.getElementById('json-output').textContent = mini;
+    }
+
+    function sortKeys() {
+      if (!lastParsed) return;
+      function sortObj(obj) {
+        if (Array.isArray(obj)) return obj.map(sortObj);
+        if (typeof obj !== 'object' || !obj) return obj;
+        return Object.keys(obj).sort().reduce((r, k) => { r[k] = sortObj(obj[k]); return r; }, {});
+      }
+      const sorted = sortObj(lastParsed);
+      document.getElementById('json-output').innerHTML = syntaxHighlight(JSON.stringify(sorted, null, getIndent()));
+    }
+
+    function copyJSON() {
+      const text = document.getElementById('json-output').textContent;
+      if (text && text !== 'El resultado aparecerá aquí...') {
+        copyText(text, document.getElementById('copy-btn'));
+      }
+    }
+
+    function clearJSON() {
+      document.getElementById('json-input').value = '';
+      processJSON();
+    }
+
+    function pasteExample() {
+      document.getElementById('json-input').value = JSON.stringify({
+        "nombre": "HerramientasPro",
+        "version": "1.0.0",
+        "herramientas": [
+          { "id": 1, "nombre": "Generador de Contraseñas", "activo": true },
+          { "id": 2, "nombre": "Base64 Encoder", "activo": true }
+        ],
+        "config": { "idioma": "es", "tema": "oscuro", "ads": true }
+      }, null, 2);
+      processJSON();
+    }
+  </script>
+</body>
+</html>

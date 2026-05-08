@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Conversor de Bytes KB MB GB TB Online Gratis | HerramientasPro</title>
+  <meta name="description" content="Convierte entre bits, bytes, kilobytes, megabytes, gigabytes y terabytes online gratis. Conversión instantánea entre todas las unidades de datos. Sin registro.">
+  <meta name="keywords" content="conversor bytes, convertir kb mb gb, megabytes gigabytes, conversor datos, bytes calculadora">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles/main.css">
+</head>
+<body>
+  <header class="site-header" id="site-header"></header>
+  <main class="container">
+    <div class="tool-page">
+      <div class="tool-main">
+        <div class="ad-banner" id="ad-top"></div>
+        <nav class="breadcrumb"><a href="/">Inicio</a> › <span>Conversor de Bytes</span></nav>
+        <div class="tool-header">
+          <h1>💾 Conversor de Bytes</h1>
+          <p>Convierte entre bits, bytes, KB, MB, GB, TB y PB al instante. Escribe en cualquier campo para convertir.</p>
+        </div>
+
+        <!-- Standard toggle -->
+        <div style="display:flex;gap:0.5rem;margin-bottom:1.5rem">
+          <button class="btn btn-primary" id="tab-bi" onclick="setStd('binary')">Binario (1 KB = 1024 B)</button>
+          <button class="btn btn-secondary" id="tab-si" onclick="setStd('si')">Decimal (1 KB = 1000 B)</button>
+        </div>
+
+        <div class="tool-box">
+          <div class="tool-box-header"><h2>Conversión de unidades de datos</h2></div>
+          <div class="tool-box-body">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem" id="fields-grid"></div>
+            <div class="btn-group" style="margin-top:1.25rem">
+              <button class="btn btn-secondary" onclick="clearAll()">Limpiar</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Practical reference -->
+        <div class="tool-box" style="margin-top:1.25rem">
+          <div class="tool-box-header"><h2>Referencia práctica</h2></div>
+          <div class="tool-box-body">
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:0.75rem">
+              <div style="background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:0.75rem">
+                <div style="font-size:0.75rem;color:var(--text3);margin-bottom:0.25rem">Texto simple (1 char)</div>
+                <div style="font-size:0.9rem;color:var(--text)">≈ 1 byte</div>
+              </div>
+              <div style="background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:0.75rem">
+                <div style="font-size:0.75rem;color:var(--text3);margin-bottom:0.25rem">Foto JPEG media</div>
+                <div style="font-size:0.9rem;color:var(--text)">≈ 3–5 MB</div>
+              </div>
+              <div style="background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:0.75rem">
+                <div style="font-size:0.75rem;color:var(--text3);margin-bottom:0.25rem">Canción MP3 (3 min)</div>
+                <div style="font-size:0.9rem;color:var(--text)">≈ 3–5 MB</div>
+              </div>
+              <div style="background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:0.75rem">
+                <div style="font-size:0.75rem;color:var(--text3);margin-bottom:0.25rem">Video HD 1 hora</div>
+                <div style="font-size:0.9rem;color:var(--text)">≈ 1–2 GB</div>
+              </div>
+              <div style="background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:0.75rem">
+                <div style="font-size:0.75rem;color:var(--text3);margin-bottom:0.25rem">Juego moderno</div>
+                <div style="font-size:0.9rem;color:var(--text)">≈ 50–150 GB</div>
+              </div>
+              <div style="background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:0.75rem">
+                <div style="font-size:0.75rem;color:var(--text3);margin-bottom:0.25rem">HDD estándar</div>
+                <div style="font-size:0.9rem;color:var(--text)">≈ 1–4 TB</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;justify-content:center;margin:1.5rem 0">
+          <div class="ad-rectangle" id="ad-mid"></div>
+        </div>
+
+        <div class="related-tools">
+          <h2 class="section-title" style="font-size:1rem">Herramientas relacionadas</h2>
+          <div class="tools-grid" style="grid-template-columns:repeat(auto-fill,minmax(180px,1fr))">
+            <a class="tool-card" href="conversor-numerico.html"><span class="tool-icon">💻</span><h3>Numérico</h3><p>Binario, hex, decimal.</p><span class="tool-link">Usar →</span></a>
+            <a class="tool-card" href="conversor-tiempo.html"><span class="tool-icon">⏱️</span><h3>Tiempo</h3><p>Segundos a días.</p><span class="tool-link">Usar →</span></a>
+            <a class="tool-card" href="porcentajes.html"><span class="tool-icon">💯</span><h3>Porcentajes</h3><p>Calculos de porcentaje.</p><span class="tool-link">Usar →</span></a>
+          </div>
+        </div>
+      </div>
+      <aside class="tool-sidebar"><div class="ad-sidebar" id="ad-sidebar"></div></aside>
+    </div>
+  </main>
+  <footer class="site-footer" id="site-footer"></footer>
+  <script src="../js/app.js"></script>
+  <script>
+    let std = 'binary';
+    const UNITS_BINARY = [
+      ['Bit (b)', 0.125],
+      ['Byte (B)', 1],
+      ['Kibibyte (KiB)', 1024],
+      ['Mebibyte (MiB)', 1048576],
+      ['Gibibyte (GiB)', 1073741824],
+      ['Tebibyte (TiB)', 1099511627776],
+      ['Pebibyte (PiB)', 1125899906842624],
+    ];
+    const UNITS_BINARY_COMMON = [
+      ['Bit (b)', 0.125],
+      ['Byte (B)', 1],
+      ['Kilobyte (KB)', 1024],
+      ['Megabyte (MB)', 1048576],
+      ['Gigabyte (GB)', 1073741824],
+      ['Terabyte (TB)', 1099511627776],
+      ['Petabyte (PB)', 1125899906842624],
+    ];
+    const UNITS_SI = [
+      ['Bit (b)', 0.125],
+      ['Byte (B)', 1],
+      ['Kilobyte (KB)', 1000],
+      ['Megabyte (MB)', 1000000],
+      ['Gigabyte (GB)', 1000000000],
+      ['Terabyte (TB)', 1000000000000],
+      ['Petabyte (PB)', 1000000000000000],
+    ];
+
+    function getUnits(){return std==='binary'?UNITS_BINARY_COMMON:UNITS_SI;}
+
+    function setStd(s){
+      std=s;
+      document.getElementById('tab-bi').className=s==='binary'?'btn btn-primary':'btn btn-secondary';
+      document.getElementById('tab-si').className=s==='si'?'btn btn-primary':'btn btn-secondary';
+      buildFields();
+    }
+
+    function fmt(n){
+      if(n===0)return'0';
+      if(Math.abs(n)>=1e15||Math.abs(n)<1e-9)return n.toExponential(4);
+      return parseFloat(n.toPrecision(10)).toString();
+    }
+
+    function buildFields(){
+      const units=getUnits();
+      const grid=document.getElementById('fields-grid');
+      grid.innerHTML=units.map(([name,factor],i)=>`
+        <div class="form-group" style="margin:0">
+          <label class="form-label">${name}</label>
+          <div style="display:flex;gap:0.4rem">
+            <input type="number" id="bf-${i}" class="form-input" placeholder="0" oninput="convBytes(${i})" step="any">
+            <button class="btn btn-secondary" style="padding:0.5rem 0.6rem;font-size:0.75rem" onclick="copyText(document.getElementById('bf-${i}').value)">📋</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function convBytes(src){
+      const units=getUnits();
+      const val=parseFloat(document.getElementById('bf-'+src).value);
+      if(isNaN(val))return;
+      const bytes=val*units[src][1];
+      units.forEach(([,factor],i)=>{
+        if(i!==src)document.getElementById('bf-'+i).value=fmt(bytes/factor);
+      });
+    }
+
+    function clearAll(){
+      getUnits().forEach((_,i)=>document.getElementById('bf-'+i).value='');
+    }
+
+    document.addEventListener('DOMContentLoaded',()=>buildFields());
+  </script>
+</body>
+</html>

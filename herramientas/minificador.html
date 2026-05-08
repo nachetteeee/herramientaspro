@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minificador CSS y JavaScript Online Gratis | HerramientasPro</title>
+  <meta name="description" content="Minifica CSS y JavaScript online gratis. Reduce el tamaño de tu código para producción eliminando espacios y comentarios. Sin registro.">
+  <meta name="keywords" content="minificador css, minificar javascript, minify css online, minify js, comprimir css js">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles/main.css">
+</head>
+<body>
+  <header class="site-header" id="site-header"></header>
+  <main class="container">
+    <div class="tool-page">
+      <div class="tool-main">
+        <div class="ad-banner" id="ad-top"></div>
+        <nav class="breadcrumb"><a href="/">Inicio</a> › <span>Minificador CSS / JS</span></nav>
+        <div class="tool-header">
+          <h1>⚡ Minificador CSS y JavaScript</h1>
+          <p>Reduce el tamaño de tu código CSS o JavaScript eliminando espacios, saltos de línea y comentarios innecesarios para producción.</p>
+        </div>
+
+        <div style="display:flex;gap:0.5rem;margin-bottom:1.5rem">
+          <button class="btn btn-primary" id="tab-css" onclick="setLang('css')">CSS</button>
+          <button class="btn btn-secondary" id="tab-js" onclick="setLang('js')">JavaScript</button>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem">
+          <div class="tool-box">
+            <div class="tool-box-header">
+              <h2>Código original</h2>
+              <div style="display:flex;gap:0.4rem">
+                <button class="btn btn-secondary" style="font-size:0.75rem;padding:0.3rem 0.6rem" onclick="loadExample()">Ejemplo</button>
+                <button class="btn btn-secondary" style="font-size:0.75rem;padding:0.3rem 0.6rem" onclick="clearAll()">Limpiar</button>
+              </div>
+            </div>
+            <div class="tool-box-body" style="padding:0">
+              <textarea id="code-input" class="form-textarea" style="border:none;border-radius:0;min-height:360px;font-size:0.85rem;resize:none" placeholder="Pega tu código aquí..." oninput="minify()" spellcheck="false"></textarea>
+            </div>
+          </div>
+          <div class="tool-box">
+            <div class="tool-box-header">
+              <h2>Código minificado</h2>
+              <button class="copy-btn" style="position:static" id="copy-btn" onclick="copyResult()">Copiar</button>
+            </div>
+            <div class="tool-box-body" style="padding:0">
+              <textarea id="code-output" class="form-textarea" style="border:none;border-radius:0;min-height:360px;font-size:0.85rem;resize:none;color:var(--text)" readonly placeholder="El resultado aparecerá aquí..."></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-row" style="margin-top:1rem">
+          <div class="stat-chip"><strong id="orig-size">—</strong>Original</div>
+          <div class="stat-chip"><strong id="mini-size">—</strong>Minificado</div>
+          <div class="stat-chip"><strong id="savings">—</strong>Ahorro</div>
+          <div class="stat-chip"><strong id="ratio">—</strong>Reducción</div>
+        </div>
+
+        <!-- Progress bar -->
+        <div id="savings-bar-wrap" style="margin-top:0.75rem;display:none">
+          <div style="height:6px;background:var(--border);border-radius:3px;overflow:hidden">
+            <div id="savings-bar" style="height:100%;background:var(--success);border-radius:3px;transition:width 0.4s;width:0"></div>
+          </div>
+        </div>
+
+        <div class="btn-group" style="margin-top:1rem">
+          <button class="btn btn-primary" onclick="minify()">⚡ Minificar</button>
+          <button class="btn btn-secondary" onclick="copyResult()">📋 Copiar resultado</button>
+          <button class="btn btn-secondary" onclick="downloadResult()">⬇ Descargar</button>
+        </div>
+
+        <div style="display:flex;justify-content:center;margin:1.5rem 0">
+          <div class="ad-rectangle" id="ad-mid"></div>
+        </div>
+
+        <div class="related-tools">
+          <h2 class="section-title" style="font-size:1rem">Herramientas relacionadas</h2>
+          <div class="tools-grid" style="grid-template-columns:repeat(auto-fill,minmax(180px,1fr))">
+            <a class="tool-card" href="json-formateador.html"><span class="tool-icon">📋</span><h3>JSON</h3><p>Minifica y formatea JSON.</p><span class="tool-link">Usar →</span></a>
+            <a class="tool-card" href="diff-texto.html"><span class="tool-icon">🔍</span><h3>Diferenciador</h3><p>Compara dos versiones.</p><span class="tool-link">Usar →</span></a>
+            <a class="tool-card" href="contador-palabras.html"><span class="tool-icon">🔢</span><h3>Contador</h3><p>Cuenta caracteres y más.</p><span class="tool-link">Usar →</span></a>
+          </div>
+        </div>
+      </div>
+      <aside class="tool-sidebar"><div class="ad-sidebar" id="ad-sidebar"></div></aside>
+    </div>
+  </main>
+  <footer class="site-footer" id="site-footer"></footer>
+  <script src="../js/app.js"></script>
+  <script>
+    let lang='css';
+    function setLang(l){
+      lang=l;
+      document.getElementById('tab-css').className=l==='css'?'btn btn-primary':'btn btn-secondary';
+      document.getElementById('tab-js').className=l==='js'?'btn btn-primary':'btn btn-secondary';
+      document.getElementById('code-input').value='';
+      document.getElementById('code-output').value='';
+      updateStats(0,0);
+    }
+
+    function minifyCSS(css){
+      return css
+        .replace(/\/\*[\s\S]*?\*\//g,'')   // remove comments
+        .replace(/\s*([{}:;,>+~])\s*/g,'$1') // spaces around symbols
+        .replace(/;\}/g,'}')                 // remove last semicolon
+        .replace(/\s+/g,' ')                 // collapse whitespace
+        .replace(/\s*{\s*/g,'{')
+        .replace(/\s*}\s*/g,'}')
+        .replace(/\s*:\s*/g,':')
+        .replace(/\s*;\s*/g,';')
+        .replace(/\s*,\s*/g,',')
+        .trim();
+    }
+
+    function minifyJS(js){
+      return js
+        .replace(/\/\/[^\n]*/g,'')          // single-line comments
+        .replace(/\/\*[\s\S]*?\*\//g,'')    // multi-line comments
+        .replace(/\n\s*\n/g,'\n')           // empty lines
+        .replace(/[ \t]+/g,' ')             // collapse spaces
+        .replace(/\n/g,'')                   // remove newlines (basic)
+        .replace(/\s*([=+\-*/%&|^!<>?:,;{}()\[\]])\s*/g,'$1') // spaces around operators
+        .replace(/; /g,';')
+        .trim();
+    }
+
+    function formatBytes(b){
+      if(b<1024)return b+' B';
+      return(b/1024).toFixed(1)+' KB';
+    }
+
+    function updateStats(orig,mini){
+      document.getElementById('orig-size').textContent=orig?formatBytes(orig):'—';
+      document.getElementById('mini-size').textContent=mini?formatBytes(mini):'—';
+      if(orig&&mini){
+        const saved=orig-mini;
+        const pct=Math.round((saved/orig)*100);
+        document.getElementById('savings').textContent=formatBytes(saved);
+        document.getElementById('ratio').textContent=pct+'%';
+        document.getElementById('savings-bar-wrap').style.display='block';
+        document.getElementById('savings-bar').style.width=pct+'%';
+      } else {
+        document.getElementById('savings').textContent='—';
+        document.getElementById('ratio').textContent='—';
+        document.getElementById('savings-bar-wrap').style.display='none';
+      }
+    }
+
+    function minify(){
+      const input=document.getElementById('code-input').value;
+      if(!input.trim()){document.getElementById('code-output').value='';updateStats(0,0);return;}
+      const result=lang==='css'?minifyCSS(input):minifyJS(input);
+      document.getElementById('code-output').value=result;
+      const origBytes=new TextEncoder().encode(input).length;
+      const miniBytes=new TextEncoder().encode(result).length;
+      updateStats(origBytes,miniBytes);
+    }
+
+    function copyResult(){
+      const val=document.getElementById('code-output').value;
+      if(val)copyText(val,document.getElementById('copy-btn'));
+    }
+
+    function downloadResult(){
+      const val=document.getElementById('code-output').value;
+      if(!val){showToast('Minifica primero el código','error');return;}
+      const ext=lang==='css'?'min.css':'min.js';
+      const a=document.createElement('a');
+      a.download='codigo.'+ext;
+      a.href='data:text/plain;charset=utf-8,'+encodeURIComponent(val);
+      a.click();
+      showToast('¡Descargado!');
+    }
+
+    function clearAll(){document.getElementById('code-input').value='';minify();}
+
+    function loadExample(){
+      if(lang==='css'){
+        document.getElementById('code-input').value=`.container {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  /* Center the content */\n  justify-content: space-between;\n  padding: 16px 24px;\n  margin: 0 auto;\n  max-width: 1200px;\n}\n\n/* Button styles */\n.button {\n  background-color: #6366f1;\n  color: #ffffff;\n  border: none;\n  border-radius: 8px;\n  padding: 12px 24px;\n  font-size: 16px;\n  font-weight: 600;\n  cursor: pointer;\n  transition: background-color 0.2s ease;\n}\n\n.button:hover {\n  background-color: #4f46e5;\n}`;
+      } else {
+        document.getElementById('code-input').value=`// Utility functions\nfunction formatDate(date) {\n  // Format a date to DD/MM/YYYY\n  const day = String(date.getDate()).padStart(2, '0');\n  const month = String(date.getMonth() + 1).padStart(2, '0');\n  const year = date.getFullYear();\n  return \`\${day}/\${month}/\${year}\`;\n}\n\n/* Calculate percentage */\nfunction percentage(value, total) {\n  if (total === 0) return 0;\n  return Math.round((value / total) * 100);\n}\n\nfunction greet(name) {\n  return 'Hola, ' + name + '!';\n}`;
+      }
+      minify();
+    }
+  </script>
+</body>
+</html>

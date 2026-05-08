@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Encoder y Decoder Base64 Online Gratis | HerramientasPro</title>
+  <meta name="description" content="Codifica y decodifica texto en Base64 online y gratis. Soporte para texto, URLs y datos. Sin registro ni instalación.">
+  <meta name="keywords" content="base64 encoder, base64 decoder, codificar base64, decodificar base64, base64 online">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles/main.css">
+</head>
+<body>
+  <header class="site-header" id="site-header"></header>
+
+  <main class="container">
+    <div class="tool-page">
+      <div class="tool-main">
+        <div class="ad-banner" id="ad-top"></div>
+
+        <nav class="breadcrumb">
+          <a href="/">Inicio</a> › <span>Encoder / Decoder Base64</span>
+        </nav>
+
+        <div class="tool-header">
+          <h1>🔄 Encoder / Decoder Base64</h1>
+          <p>Codifica texto plano a Base64 o decodifica Base64 a texto. Compatible con URLs y datos binarios.</p>
+        </div>
+
+        <!-- Mode tabs -->
+        <div style="display:flex;gap:0.5rem;margin-bottom:1.5rem">
+          <button class="btn btn-primary" id="tab-encode" onclick="setMode('encode')">Codificar (→ Base64)</button>
+          <button class="btn btn-secondary" id="tab-decode" onclick="setMode('decode')">Decodificar (← Base64)</button>
+        </div>
+
+        <div class="tool-box">
+          <div class="tool-box-header">
+            <h2 id="box-title">Texto → Base64</h2>
+          </div>
+          <div class="tool-box-body">
+            <div class="form-group">
+              <label class="form-label" id="input-label">Texto de entrada</label>
+              <textarea id="b64-input" class="form-textarea" placeholder="Escribe o pega el texto aquí..." oninput="process()"></textarea>
+            </div>
+
+            <!-- Options -->
+            <div class="checkbox-group" style="margin-bottom:1rem">
+              <label class="checkbox-item">
+                <input type="checkbox" id="url-safe" onchange="process()"> URL-safe (usa - y _ en vez de + y /)
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" id="no-padding" onchange="process()"> Sin padding (sin =)
+              </label>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" id="output-label">Resultado Base64</label>
+              <div class="output-box" id="b64-output" style="min-height:100px;word-break:break-all">
+                <button class="copy-btn" id="copy-btn" onclick="copyResult()">Copiar</button>
+                <span id="b64-text">El resultado aparecerá aquí...</span>
+              </div>
+            </div>
+
+            <div id="b64-error" style="color:var(--error);font-size:0.85rem;margin-top:0.5rem;display:none"></div>
+
+            <div class="btn-group">
+              <button class="btn btn-primary" onclick="process()">Procesar</button>
+              <button class="btn btn-secondary" onclick="swapIO()">⇅ Intercambiar</button>
+              <button class="btn btn-secondary" onclick="clearAll()">Limpiar</button>
+            </div>
+
+            <!-- Stats -->
+            <div class="stats-row" style="margin-top:1.25rem">
+              <div class="stat-chip"><strong id="in-len">0</strong>chars entrada</div>
+              <div class="stat-chip"><strong id="out-len">0</strong>chars salida</div>
+              <div class="stat-chip"><strong id="ratio">—</strong>ratio</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;justify-content:center;margin:1.5rem 0">
+          <div class="ad-rectangle" id="ad-mid"></div>
+        </div>
+
+        <!-- Info -->
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem">
+          <h2 style="font-size:1rem;font-weight:700;margin-bottom:0.75rem">¿Para qué sirve Base64?</h2>
+          <ul style="color:var(--text2);font-size:0.875rem;display:flex;flex-direction:column;gap:0.5rem;padding-left:1.25rem">
+            <li>Transmitir datos binarios en sistemas que solo aceptan texto (email, JSON, XML).</li>
+            <li>Incrustar imágenes directamente en HTML o CSS con <code style="color:var(--accent)">data:image/...</code>.</li>
+            <li>Codificar credenciales en headers HTTP (autenticación básica).</li>
+            <li>Almacenar datos en URLs o cookies sin caracteres especiales.</li>
+          </ul>
+        </div>
+
+        <div class="related-tools">
+          <h2 class="section-title" style="font-size:1rem">Herramientas relacionadas</h2>
+          <div class="tools-grid" style="grid-template-columns:repeat(auto-fill,minmax(180px,1fr))">
+            <a class="tool-card" href="url-encoder.html">
+              <span class="tool-icon">🔗</span><h3>Encoder URL</h3>
+              <p>Codifica para URLs.</p>
+              <span class="tool-link">Usar →</span>
+            </a>
+            <a class="tool-card" href="json-formateador.html">
+              <span class="tool-icon">📋</span><h3>JSON Formateador</h3>
+              <p>Valida y formatea JSON.</p>
+              <span class="tool-link">Usar →</span>
+            </a>
+            <a class="tool-card" href="generador-contrasenas.html">
+              <span class="tool-icon">🔐</span><h3>Contraseñas</h3>
+              <p>Genera contraseñas seguras.</p>
+              <span class="tool-link">Usar →</span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <aside class="tool-sidebar">
+        <div class="ad-sidebar" id="ad-sidebar"></div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="site-footer" id="site-footer"></footer>
+  <script src="../js/app.js"></script>
+  <script>
+    let mode = 'encode';
+
+    function setMode(m) {
+      mode = m;
+      const isEncode = m === 'encode';
+      document.getElementById('tab-encode').className = isEncode ? 'btn btn-primary' : 'btn btn-secondary';
+      document.getElementById('tab-decode').className = isEncode ? 'btn btn-secondary' : 'btn btn-primary';
+      document.getElementById('box-title').textContent = isEncode ? 'Texto → Base64' : 'Base64 → Texto';
+      document.getElementById('input-label').textContent = isEncode ? 'Texto de entrada' : 'Texto Base64';
+      document.getElementById('output-label').textContent = isEncode ? 'Resultado Base64' : 'Texto decodificado';
+      document.getElementById('b64-input').placeholder = isEncode ? 'Escribe o pega el texto aquí...' : 'Pega el texto Base64 aquí...';
+      process();
+    }
+
+    function process() {
+      const input = document.getElementById('b64-input').value;
+      const urlSafe = document.getElementById('url-safe').checked;
+      const noPad = document.getElementById('no-padding').checked;
+      const errEl = document.getElementById('b64-error');
+      errEl.style.display = 'none';
+
+      document.getElementById('in-len').textContent = input.length.toLocaleString('es');
+
+      if (!input.trim()) {
+        document.getElementById('b64-text').textContent = 'El resultado aparecerá aquí...';
+        document.getElementById('out-len').textContent = '0';
+        document.getElementById('ratio').textContent = '—';
+        return;
+      }
+
+      try {
+        let result;
+        if (mode === 'encode') {
+          result = btoa(unescape(encodeURIComponent(input)));
+          if (urlSafe) result = result.replace(/\+/g, '-').replace(/\//g, '_');
+          if (noPad) result = result.replace(/=/g, '');
+        } else {
+          let b64 = input;
+          if (urlSafe) b64 = b64.replace(/-/g, '+').replace(/_/g, '/');
+          // Add padding if missing
+          while (b64.length % 4 !== 0) b64 += '=';
+          result = decodeURIComponent(escape(atob(b64)));
+        }
+        document.getElementById('b64-text').textContent = result;
+        document.getElementById('b64-output').classList.remove('error');
+        document.getElementById('out-len').textContent = result.length.toLocaleString('es');
+        if (input.length > 0) {
+          document.getElementById('ratio').textContent = (result.length / input.length).toFixed(2) + 'x';
+        }
+      } catch (e) {
+        document.getElementById('b64-text').textContent = '';
+        document.getElementById('b64-output').classList.add('error');
+        errEl.textContent = '⚠ ' + (mode === 'decode' ? 'Base64 inválido. Verifica la cadena de entrada.' : 'Error al codificar: ' + e.message);
+        errEl.style.display = 'block';
+        document.getElementById('out-len').textContent = '—';
+        document.getElementById('ratio').textContent = '—';
+      }
+    }
+
+    function swapIO() {
+      const input = document.getElementById('b64-input');
+      const output = document.getElementById('b64-text').textContent;
+      if (output && output !== 'El resultado aparecerá aquí...') {
+        input.value = output;
+        setMode(mode === 'encode' ? 'decode' : 'encode');
+      }
+    }
+
+    function clearAll() {
+      document.getElementById('b64-input').value = '';
+      process();
+    }
+
+    function copyResult() {
+      const text = document.getElementById('b64-text').textContent;
+      if (text && text !== 'El resultado aparecerá aquí...') {
+        copyText(text, document.getElementById('copy-btn'));
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Conversor de Tiempo Online Gratis | HerramientasPro</title>
+  <meta name="description" content="Convierte entre segundos, minutos, horas, días, semanas, meses y años online gratis. Conversión instantánea. Sin registro.">
+  <meta name="keywords" content="conversor tiempo, convertir segundos minutos, horas dias, convertir tiempo, calculadora tiempo">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles/main.css">
+</head>
+<body>
+  <header class="site-header" id="site-header"></header>
+  <main class="container">
+    <div class="tool-page">
+      <div class="tool-main">
+        <div class="ad-banner" id="ad-top"></div>
+        <nav class="breadcrumb"><a href="/">Inicio</a> › <span>Conversor de Tiempo</span></nav>
+        <div class="tool-header">
+          <h1>⏱️ Conversor de Tiempo</h1>
+          <p>Convierte entre segundos, minutos, horas, días, semanas, meses y años. Escribe en cualquier campo.</p>
+        </div>
+
+        <div class="tool-box">
+          <div class="tool-box-header"><h2>Conversión de tiempo</h2></div>
+          <div class="tool-box-body">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+              <div class="form-group" style="margin:0">
+                <label class="form-label">Nanosegundos (ns)</label>
+                <div style="display:flex;gap:0.4rem">
+                  <input type="number" id="ns" class="form-input" placeholder="0" oninput="conv('ns')" step="any">
+                  <button class="btn btn-secondary" style="padding:0.5rem 0.6rem;font-size:0.75rem" onclick="copyText(document.getElementById('ns').value)">📋</button>
+                </div>
+              </div>
+              <div class="form-group" style="margin:0">
+                <label class="form-label">Microsegundos (µs)</label>
+                <div style="display:flex;gap:0.4rem">
+                  <input type="number" id="us" class="form-input" placeholder="0" oninput="conv('us')" step="any">
+                  <button class="btn btn-secondary" style="padding:0.5rem 0.6rem;font-size:0.75rem" onclick="copyText(document.getElementById('us').value)">📋</button>
+                </div>
+              </div>
+              <div class="form-group" style="margin:0">
+                <label class="form-label">Milisegundos (ms)</label>
+                <div style="display:flex;gap:0.4rem">
+                  <input type="number" id="ms" class="form-input" placeholder="0" oninput="conv('ms')" step="any">
+                  <button class="btn btn-secondary" style="padding:0.5rem 0.6rem;font-size:0.75rem" onclick="copyText(document.getElementById('ms').value)">📋</button>
+                </div>
+              </div>
+              <div class="form-group" style="margin:0">
+                <label class="form-label">Segundos (s)</label>
+                <div style="display:flex;gap:0.4rem">
+                  <input type="number" id="s" class="form-input" placeholder="0" oninput="conv('s')" step="any">
+                  <button class="btn btn-secondary" style="padding:0.5rem 0.6rem;font-size:0.75rem" onclick="copyText(document.getElementById('s').value)">📋</button>
+                </div>
+              </div>
+              <div class="form-group" style="margin:0">
+                <label class="form-label">Minutos (min)</label>
+                <div style="display:flex;gap:0.4rem">
+                  <input type="number" id="min" class="form-input" placeholder="0" oninput="conv('min')" step="any">
+                  <button class="btn btn-secondary" style="padding:0.5rem 0.6rem;font-size:0.75rem" onclick="copyText(document.getElementById('min').value)">📋</button>
+                </div>
+              </div>
+              <div class="form-group" style="margin:0">
+                <label class="form-label">Horas (h)</label>
+                <div style="display:flex;gap:0.4rem">
+                  <input type="number" id="h" class="form-input" placeholder="0" oninput="conv('h')" step="any">
+                  <button class="btn btn-secondary" style="padding:0.5rem 0.6rem;font-size:0.75rem" onclick="copyText(document.getElementById('h').value)">📋</button>
+                </div>
+              </div>
+              <div class="form-group" style="margin:0">
+                <label class="form-label">Días</label>
+                <div style="display:flex;gap:0.4rem">
+                  <input type="number" id="d" class="form-input" placeholder="0" oninput="conv('d')" step="any">
+                  <button class="btn btn-secondary" style="padding:0.5rem 0.6rem;font-size:0.75rem" onclick="copyText(document.getElementById('d').value)">📋</button>
+                </div>
+              </div>
+              <div class="form-group" style="margin:0">
+                <label class="form-label">Semanas</label>
+                <div style="display:flex;gap:0.4rem">
+                  <input type="number" id="w" class="form-input" placeholder="0" oninput="conv('w')" step="any">
+                  <button class="btn btn-secondary" style="padding:0.5rem 0.6rem;font-size:0.75rem" onclick="copyText(document.getElementById('w').value)">📋</button>
+                </div>
+              </div>
+              <div class="form-group" style="margin:0">
+                <label class="form-label">Meses (aprox. 30.44 días)</label>
+                <div style="display:flex;gap:0.4rem">
+                  <input type="number" id="mo" class="form-input" placeholder="0" oninput="conv('mo')" step="any">
+                  <button class="btn btn-secondary" style="padding:0.5rem 0.6rem;font-size:0.75rem" onclick="copyText(document.getElementById('mo').value)">📋</button>
+                </div>
+              </div>
+              <div class="form-group" style="margin:0">
+                <label class="form-label">Años (365.25 días)</label>
+                <div style="display:flex;gap:0.4rem">
+                  <input type="number" id="y" class="form-input" placeholder="0" oninput="conv('y')" step="any">
+                  <button class="btn btn-secondary" style="padding:0.5rem 0.6rem;font-size:0.75rem" onclick="copyText(document.getElementById('y').value)">📋</button>
+                </div>
+              </div>
+            </div>
+            <div class="btn-group" style="margin-top:1.25rem">
+              <button class="btn btn-secondary" onclick="clearAll()">Limpiar</button>
+            </div>
+
+            <!-- Human readable -->
+            <div class="output-box" id="human-out" style="margin-top:1.25rem;font-size:0.95rem;min-height:52px;display:flex;align-items:center;font-family:inherit">
+              <span style="color:var(--text2)">Escribe un valor para ver la representación legible.</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;justify-content:center;margin:1.5rem 0">
+          <div class="ad-rectangle" id="ad-mid"></div>
+        </div>
+
+        <div class="related-tools">
+          <h2 class="section-title" style="font-size:1rem">Herramientas relacionadas</h2>
+          <div class="tools-grid" style="grid-template-columns:repeat(auto-fill,minmax(180px,1fr))">
+            <a class="tool-card" href="calculadora-fechas.html"><span class="tool-icon">📅</span><h3>Fechas</h3><p>Días entre fechas.</p><span class="tool-link">Usar →</span></a>
+            <a class="tool-card" href="conversor-unidades.html"><span class="tool-icon">📐</span><h3>Unidades</h3><p>Longitud, peso, temperatura.</p><span class="tool-link">Usar →</span></a>
+            <a class="tool-card" href="porcentajes.html"><span class="tool-icon">💯</span><h3>Porcentajes</h3><p>Calcula porcentajes.</p><span class="tool-link">Usar →</span></a>
+          </div>
+        </div>
+      </div>
+      <aside class="tool-sidebar"><div class="ad-sidebar" id="ad-sidebar"></div></aside>
+    </div>
+  </main>
+  <footer class="site-footer" id="site-footer"></footer>
+  <script src="../js/app.js"></script>
+  <script>
+    // All values in seconds relative
+    const UNITS = {
+      ns: 1e-9, us: 1e-6, ms: 0.001, s: 1,
+      min: 60, h: 3600, d: 86400, w: 604800,
+      mo: 2629800, y: 31557600
+    };
+    const IDS = ['ns','us','ms','s','min','h','d','w','mo','y'];
+
+    function fmt(n) {
+      if(n===0)return'0';
+      if(Math.abs(n)>=1e12||Math.abs(n)<1e-6)return n.toExponential(4);
+      return parseFloat(n.toPrecision(10)).toString();
+    }
+
+    function conv(src) {
+      const val = parseFloat(document.getElementById(src).value);
+      if(isNaN(val)){clearAll();return;}
+      const seconds = val * UNITS[src];
+      IDS.forEach(id => {
+        if(id !== src) {
+          document.getElementById(id).value = fmt(seconds / UNITS[id]);
+        }
+      });
+      // Human readable
+      const parts = [];
+      let rem = Math.abs(seconds);
+      const y = Math.floor(rem/UNITS.y); if(y) { parts.push(y+' año'+(y>1?'s':'')); rem-=y*UNITS.y; }
+      const mo = Math.floor(rem/UNITS.mo); if(mo) { parts.push(mo+' mes'+(mo>1?'es':'')); rem-=mo*UNITS.mo; }
+      const d2 = Math.floor(rem/UNITS.d); if(d2) { parts.push(d2+' día'+(d2>1?'s':'')); rem-=d2*UNITS.d; }
+      const h2 = Math.floor(rem/UNITS.h); if(h2) { parts.push(h2+' hora'+(h2>1?'s':'')); rem-=h2*UNITS.h; }
+      const m2 = Math.floor(rem/UNITS.min); if(m2) { parts.push(m2+' minuto'+(m2>1?'s':'')); rem-=m2*UNITS.min; }
+      const s2 = parseFloat(rem.toFixed(3)); if(s2) parts.push(s2+' segundo'+(s2!==1?'s':''));
+      const human = parts.length ? (seconds<0?'−':'')+parts.join(', ') : '0 segundos';
+      document.getElementById('human-out').innerHTML = `<span style="color:var(--text)">= <strong>${human}</strong></span>`;
+    }
+
+    function clearAll() {
+      IDS.forEach(id => document.getElementById(id).value = '');
+      document.getElementById('human-out').innerHTML = '<span style="color:var(--text2)">Escribe un valor para ver la representación legible.</span>';
+    }
+  </script>
+</body>
+</html>

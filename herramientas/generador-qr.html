@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generador de Códigos QR Online Gratis | HerramientasPro</title>
+  <meta name="description" content="Genera códigos QR de cualquier texto, URL, email o número de teléfono online y gratis. Descarga en PNG. Sin registro.">
+  <meta name="keywords" content="generador qr, crear codigo qr, qr code online, generar qr gratis, qr url">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles/main.css">
+</head>
+<body>
+  <header class="site-header" id="site-header"></header>
+
+  <main class="container">
+    <div class="tool-page">
+      <div class="tool-main">
+        <div class="ad-banner" id="ad-top"></div>
+
+        <nav class="breadcrumb">
+          <a href="/">Inicio</a> › <span>Generador de QR</span>
+        </nav>
+
+        <div class="tool-header">
+          <h1>📱 Generador de Códigos QR</h1>
+          <p>Convierte cualquier texto o URL en un código QR al instante. Descarga la imagen en PNG gratis.</p>
+        </div>
+
+        <div class="tool-box">
+          <div class="tool-box-header"><h2>Configuración</h2></div>
+          <div class="tool-box-body">
+
+            <!-- Type selector -->
+            <div class="form-group">
+              <label class="form-label">Tipo de contenido</label>
+              <div style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1rem" id="type-btns">
+                <button class="btn btn-primary" onclick="setType('text', this)">Texto</button>
+                <button class="btn btn-secondary" onclick="setType('url', this)">URL</button>
+                <button class="btn btn-secondary" onclick="setType('email', this)">Email</button>
+                <button class="btn btn-secondary" onclick="setType('tel', this)">Teléfono</button>
+                <button class="btn btn-secondary" onclick="setType('wifi', this)">WiFi</button>
+              </div>
+            </div>
+
+            <!-- Main input -->
+            <div id="input-area">
+              <div class="form-group">
+                <label class="form-label" id="main-label">Texto</label>
+                <textarea id="qr-input" class="form-textarea" style="min-height:90px"
+                  placeholder="Escribe o pega el texto aquí..."
+                  oninput="generateQR()"></textarea>
+              </div>
+            </div>
+
+            <!-- WiFi extra fields -->
+            <div id="wifi-fields" style="display:none">
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">SSID (Nombre de red)</label>
+                  <input type="text" id="wifi-ssid" class="form-input" placeholder="MiRedWiFi" oninput="generateQR()">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Contraseña</label>
+                  <input type="text" id="wifi-pass" class="form-input" placeholder="••••••••" oninput="generateQR()">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Seguridad</label>
+                <select id="wifi-enc" class="form-input" onchange="generateQR()">
+                  <option value="WPA">WPA/WPA2</option>
+                  <option value="WEP">WEP</option>
+                  <option value="nopass">Sin contraseña</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Options -->
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Tamaño (px)</label>
+                <input type="number" id="qr-size" class="form-input" value="256" min="128" max="512" step="64" oninput="generateQR()">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Color del QR</label>
+                <input type="color" id="qr-color" class="form-input" value="#000000" style="height:42px;padding:0.25rem" oninput="generateQR()">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Fondo</label>
+                <input type="color" id="qr-bg" class="form-input" value="#ffffff" style="height:42px;padding:0.25rem" oninput="generateQR()">
+              </div>
+            </div>
+
+            <!-- QR Output -->
+            <div style="text-align:center;margin-top:1.5rem">
+              <div id="qr-container" style="
+                display:inline-flex;align-items:center;justify-content:center;
+                background:#fff;padding:16px;border-radius:var(--radius);
+                min-width:200px;min-height:200px;
+                border:1px solid var(--border);
+              ">
+                <canvas id="qr-canvas"></canvas>
+              </div>
+              <div id="qr-placeholder" style="color:var(--text3);font-size:0.875rem;margin-top:0.5rem;display:none">
+                Escribe algo para generar el QR
+              </div>
+            </div>
+
+            <div class="btn-group" style="justify-content:center;margin-top:1.25rem">
+              <button class="btn btn-primary" onclick="downloadQR()">⬇ Descargar PNG</button>
+              <button class="btn btn-secondary" onclick="copyQRDataURL()">📋 Copiar imagen</button>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;justify-content:center;margin:1.5rem 0">
+          <div class="ad-rectangle" id="ad-mid"></div>
+        </div>
+
+        <!-- Use cases -->
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem">
+          <h2 style="font-size:1rem;font-weight:700;margin-bottom:0.75rem">Usos comunes del código QR</h2>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0.75rem">
+            <div style="font-size:0.875rem;color:var(--text2)">📱 Compartir links de sitios web</div>
+            <div style="font-size:0.875rem;color:var(--text2)">📶 Conectar a redes WiFi</div>
+            <div style="font-size:0.875rem;color:var(--text2)">📧 Compartir dirección de email</div>
+            <div style="font-size:0.875rem;color:var(--text2)">📞 Guardar número de teléfono</div>
+            <div style="font-size:0.875rem;color:var(--text2)">🍽️ Menús digitales de restaurantes</div>
+            <div style="font-size:0.875rem;color:var(--text2)">🏷️ Tarjetas de presentación digitales</div>
+          </div>
+        </div>
+
+        <div class="related-tools">
+          <h2 class="section-title" style="font-size:1rem">Herramientas relacionadas</h2>
+          <div class="tools-grid" style="grid-template-columns:repeat(auto-fill,minmax(180px,1fr))">
+            <a class="tool-card" href="url-encoder.html"><span class="tool-icon">🔗</span><h3>URL Encoder</h3><p>Codifica URLs.</p><span class="tool-link">Usar →</span></a>
+            <a class="tool-card" href="generador-contrasenas.html"><span class="tool-icon">🔐</span><h3>Contraseñas</h3><p>Contraseñas seguras.</p><span class="tool-link">Usar →</span></a>
+            <a class="tool-card" href="color-conversor.html"><span class="tool-icon">🎨</span><h3>Conversor Colores</h3><p>HEX, RGB, HSL.</p><span class="tool-link">Usar →</span></a>
+          </div>
+        </div>
+      </div>
+      <aside class="tool-sidebar">
+        <div class="ad-sidebar" id="ad-sidebar"></div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="site-footer" id="site-footer"></footer>
+
+  <!-- QR library (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+  <script src="../js/app.js"></script>
+  <script>
+    let currentType = 'text';
+    let qrInstance = null;
+
+    function setType(type, btn) {
+      currentType = type;
+      document.querySelectorAll('#type-btns button').forEach(b => b.className = 'btn btn-secondary');
+      btn.className = 'btn btn-primary';
+
+      const labels = {
+        text: 'Texto', url: 'URL (con https://)', email: 'Dirección de email',
+        tel: 'Número de teléfono', wifi: ''
+      };
+      document.getElementById('main-label').textContent = labels[type];
+
+      const placeholders = {
+        text: 'Escribe o pega el texto aquí...',
+        url: 'https://ejemplo.com',
+        email: 'correo@ejemplo.com',
+        tel: '+34 600 000 000',
+        wifi: ''
+      };
+      document.getElementById('qr-input').placeholder = placeholders[type];
+
+      const isWifi = type === 'wifi';
+      document.getElementById('input-area').style.display = isWifi ? 'none' : 'block';
+      document.getElementById('wifi-fields').style.display = isWifi ? 'block' : 'none';
+      generateQR();
+    }
+
+    function getQRContent() {
+      if (currentType === 'wifi') {
+        const ssid = document.getElementById('wifi-ssid').value;
+        const pass = document.getElementById('wifi-pass').value;
+        const enc = document.getElementById('wifi-enc').value;
+        if (!ssid) return '';
+        return `WIFI:T:${enc};S:${ssid};P:${pass};;`;
+      }
+      const raw = document.getElementById('qr-input').value.trim();
+      if (!raw) return '';
+      if (currentType === 'email') return raw.startsWith('mailto:') ? raw : 'mailto:' + raw;
+      if (currentType === 'tel') return raw.startsWith('tel:') ? raw : 'tel:' + raw;
+      return raw;
+    }
+
+    function generateQR() {
+      const content = getQRContent();
+      const canvas = document.getElementById('qr-canvas');
+      const size = Math.min(Math.max(parseInt(document.getElementById('qr-size').value) || 256, 128), 512);
+      const color = document.getElementById('qr-color').value;
+      const bg = document.getElementById('qr-bg').value;
+      const container = document.getElementById('qr-container');
+      container.style.background = bg;
+
+      if (!content) {
+        canvas.width = 0; canvas.height = 0;
+        return;
+      }
+
+      try {
+        // Clear previous
+        canvas.width = size; canvas.height = size;
+        if (qrInstance) { try { qrInstance.clear(); } catch(e) {} }
+
+        // Use QRCode library
+        const tempDiv = document.createElement('div');
+        qrInstance = new QRCode(tempDiv, {
+          text: content,
+          width: size,
+          height: size,
+          colorDark: color,
+          colorLight: bg,
+          correctLevel: QRCode.CorrectLevel.M,
+        });
+
+        // Wait for canvas render
+        setTimeout(() => {
+          const srcCanvas = tempDiv.querySelector('canvas');
+          if (srcCanvas) {
+            canvas.width = size;
+            canvas.height = size;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(srcCanvas, 0, 0);
+          }
+        }, 50);
+      } catch(e) {
+        console.error('QR error:', e);
+      }
+    }
+
+    function downloadQR() {
+      const canvas = document.getElementById('qr-canvas');
+      if (!canvas.width) { showToast('Genera un QR primero', 'error'); return; }
+      const a = document.createElement('a');
+      a.download = 'qr-herramientaspro.png';
+      a.href = canvas.toDataURL('image/png');
+      a.click();
+      showToast('¡QR descargado!');
+    }
+
+    function copyQRDataURL() {
+      const canvas = document.getElementById('qr-canvas');
+      if (!canvas.width) { showToast('Genera un QR primero', 'error'); return; }
+      canvas.toBlob(blob => {
+        const item = new ClipboardItem({ 'image/png': blob });
+        navigator.clipboard.write([item]).then(() => showToast('¡Imagen copiada!'));
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', generateQR);
+  </script>
+</body>
+</html>

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generador de Texto Aleatorio en Español Online | HerramientasPro</title>
+  <meta name="description" content="Genera texto aleatorio en español: palabras, nombres, frases, oraciones y párrafos. También genera emails, IPs, fechas y más. Gratis y sin registro.">
+  <meta name="keywords" content="generador texto aleatorio, palabras aleatorias español, nombres aleatorios, datos prueba, random text generator">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles/main.css">
+</head>
+<body>
+  <header class="site-header" id="site-header"></header>
+  <main class="container">
+    <div class="tool-page">
+      <div class="tool-main">
+        <div class="ad-banner" id="ad-top"></div>
+        <nav class="breadcrumb"><a href="/">Inicio</a> › <span>Texto Aleatorio</span></nav>
+        <div class="tool-header">
+          <h1>🎰 Generador de Texto Aleatorio</h1>
+          <p>Genera palabras, nombres, frases, emails, IPs, fechas y otros datos aleatorios para pruebas y desarrollo.</p>
+        </div>
+
+        <!-- Tabs -->
+        <div style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1.5rem" id="type-tabs"></div>
+
+        <div class="tool-box">
+          <div class="tool-box-header"><h2 id="gen-title">Generador</h2></div>
+          <div class="tool-box-body">
+            <div class="form-row" style="align-items:flex-end">
+              <div class="form-group">
+                <label class="form-label">Cantidad</label>
+                <input type="number" id="gen-count" class="form-input" value="10" min="1" max="200">
+              </div>
+              <div class="form-group" id="extra-opts"></div>
+              <div class="form-group">
+                <label class="form-label">&nbsp;</label>
+                <button class="btn btn-primary" onclick="generate()">⟳ Generar</button>
+              </div>
+            </div>
+
+            <div class="tool-box" style="margin-top:1rem;background:var(--bg)">
+              <div class="tool-box-header" style="background:var(--bg)">
+                <h2 style="font-size:0.85rem">Resultado</h2>
+                <div style="display:flex;gap:0.4rem">
+                  <button class="copy-btn" style="position:static" id="copy-result" onclick="copyResult()">Copiar</button>
+                  <button class="copy-btn" style="position:static" onclick="downloadResult()">⬇</button>
+                </div>
+              </div>
+              <div class="tool-box-body" style="background:var(--bg)">
+                <div id="gen-output" style="font-family:'Cascadia Code','Fira Code',monospace;font-size:0.875rem;white-space:pre-line;color:var(--text);min-height:200px;line-height:1.8">
+                  Selecciona un tipo y haz clic en Generar.
+                </div>
+              </div>
+            </div>
+
+            <div class="stats-row" style="margin-top:1rem">
+              <div class="stat-chip"><strong id="gen-count-out">—</strong>generados</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;justify-content:center;margin:1.5rem 0">
+          <div class="ad-rectangle" id="ad-mid"></div>
+        </div>
+
+        <div class="related-tools">
+          <h2 class="section-title" style="font-size:1rem">Herramientas relacionadas</h2>
+          <div class="tools-grid" style="grid-template-columns:repeat(auto-fill,minmax(180px,1fr))">
+            <a class="tool-card" href="lorem-ipsum.html"><span class="tool-icon">📝</span><h3>Lorem Ipsum</h3><p>Texto de relleno clásico.</p><span class="tool-link">Usar →</span></a>
+            <a class="tool-card" href="uuid.html"><span class="tool-icon">🎲</span><h3>UUID</h3><p>Identificadores únicos.</p><span class="tool-link">Usar →</span></a>
+            <a class="tool-card" href="generador-contrasenas.html"><span class="tool-icon">🔐</span><h3>Contraseñas</h3><p>Contraseñas seguras.</p><span class="tool-link">Usar →</span></a>
+          </div>
+        </div>
+      </div>
+      <aside class="tool-sidebar"><div class="ad-sidebar" id="ad-sidebar"></div></aside>
+    </div>
+  </main>
+  <footer class="site-footer" id="site-footer"></footer>
+  <script src="../js/app.js"></script>
+  <script>
+    const NOMBRES = ['Carlos','María','Juan','Ana','Pedro','Laura','Miguel','Sofía','David','Carmen','José','Elena','Antonio','Isabel','Manuel','Rosa','Francisco','Marta','Alejandro','Patricia','Luis','Cristina','Jorge','Sandra','Roberto','Lucía','Sergio','Andrea','Diego','Natalia','Pablo','Silvia','Fernando','Beatriz','Javier','Raquel','Álvaro','Pilar','Rubén','Eva'];
+    const APELLIDOS = ['García','Martínez','López','Sánchez','González','Pérez','Rodríguez','Fernández','Jiménez','Ruiz','Hernández','Díaz','Moreno','Álvarez','Romero','Torres','Domínguez','Gil','Vázquez','Serrano','Ramos','Blanco','Molina','Castro','Ortiz','Rubio','Marín','Navarro','Iglesias','Medina'];
+    const VERBOS = ['corre','salta','lee','escribe','piensa','trabaja','estudia','come','bebe','duerme','habla','escucha','aprende','enseña','crea','diseña','desarrolla','analiza','resuelve','investiga'];
+    const ADJETIVOS = ['rápido','lento','inteligente','creativo','moderno','antiguo','grande','pequeño','brillante','oscuro','feliz','triste','fuerte','débil','alto','bajo','nuevo','viejo','importante','interesante'];
+    const SUSTANTIVOS = ['programador','diseñador','empresa','proyecto','sistema','aplicación','computadora','internet','base de datos','algoritmo','función','variable','objeto','clase','método','interfaz','servicio','API','servidor','cliente'];
+    const CIUDADES = ['Madrid','Barcelona','Sevilla','Valencia','Bilbao','Málaga','Zaragoza','Murcia','Alicante','Córdoba','Valladolid','Vigo','Gijón','Granada','Palma','Las Palmas','Santa Cruz de Tenerife','Badalona','Terrassa','Hospitalet'];
+    const DOMINIOS = ['gmail.com','yahoo.com','hotmail.com','outlook.com','empresa.es','correo.com','mail.net','inbox.org'];
+    const PALABRAS_ES = ['tiempo','vida','mundo','persona','año','día','vez','forma','parte','lugar','caso','agua','trabajo','grupo','problema','mano','ciudad','punto','tipo','hecho','libro','país','Estado','momento','manera','mujer','hombre','pueblo','gobierno','hora'];
+
+    const GENERATORS = {
+      'Palabras': {
+        icon:'📖',
+        extra: '',
+        gen: (n) => Array.from({length:n},()=>PALABRAS_ES[Math.floor(Math.random()*PALABRAS_ES.length)])
+      },
+      'Nombres': {
+        icon:'👤',
+        extra: '<label class="form-label">Formato</label><select id="name-fmt" class="form-input"><option value="full">Nombre completo</option><option value="first">Solo nombre</option><option value="last">Solo apellido</option></select>',
+        gen: (n) => {
+          const fmt = document.getElementById('name-fmt')?.value || 'full';
+          return Array.from({length:n},()=>{
+            const nom=NOMBRES[Math.floor(Math.random()*NOMBRES.length)];
+            const ap1=APELLIDOS[Math.floor(Math.random()*APELLIDOS.length)];
+            const ap2=APELLIDOS[Math.floor(Math.random()*APELLIDOS.length)];
+            if(fmt==='first')return nom;
+            if(fmt==='last')return ap1+' '+ap2;
+            return nom+' '+ap1+' '+ap2;
+          });
+        }
+      },
+      'Emails': {
+        icon:'📧',
+        extra: '',
+        gen: (n) => Array.from({length:n},()=>{
+          const nom=NOMBRES[Math.floor(Math.random()*NOMBRES.length)].toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
+          const ap=APELLIDOS[Math.floor(Math.random()*APELLIDOS.length)].toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
+          const dom=DOMINIOS[Math.floor(Math.random()*DOMINIOS.length)];
+          const sep=['.','-','_'][Math.floor(Math.random()*3)];
+          return nom+sep+ap+(Math.random()<0.3?Math.floor(Math.random()*99):'')+`@${dom}`;
+        })
+      },
+      'Frases': {
+        icon:'💬',
+        extra: '',
+        gen: (n) => Array.from({length:n},()=>{
+          const s=SUSTANTIVOS[Math.floor(Math.random()*SUSTANTIVOS.length)];
+          const v=VERBOS[Math.floor(Math.random()*VERBOS.length)];
+          const adj=ADJETIVOS[Math.floor(Math.random()*ADJETIVOS.length)];
+          const s2=SUSTANTIVOS[Math.floor(Math.random()*SUSTANTIVOS.length)];
+          return`El ${s} ${v} de manera ${adj} en el ${s2}.`;
+        })
+      },
+      'Números': {
+        icon:'🔢',
+        extra: '<label class="form-label">Rango</label><div style="display:flex;gap:0.4rem"><input type="number" id="num-min" class="form-input" value="1" placeholder="Mín"><input type="number" id="num-max" class="form-input" value="100" placeholder="Máx"></div>',
+        gen: (n) => {
+          const min=parseInt(document.getElementById('num-min')?.value)||1;
+          const max=parseInt(document.getElementById('num-max')?.value)||100;
+          return Array.from({length:n},()=>Math.floor(Math.random()*(max-min+1))+min);
+        }
+      },
+      'Teléfonos': {
+        icon:'📞',
+        extra: '',
+        gen: (n) => Array.from({length:n},()=>{
+          const pref=['6','7','9'][Math.floor(Math.random()*3)];
+          return '+34 '+pref+Array.from({length:8},()=>Math.floor(Math.random()*10)).join('').replace(/(.{3})(.{2})(.{2})(.{1})/,'$1 $2 $3 $4');
+        })
+      },
+      'IPs': {
+        icon:'🌐',
+        extra: '<label class="form-label">Tipo</label><select id="ip-type" class="form-input"><option value="ipv4">IPv4</option><option value="ipv6">IPv6</option></select>',
+        gen: (n) => {
+          const t=document.getElementById('ip-type')?.value||'ipv4';
+          return Array.from({length:n},()=>{
+            if(t==='ipv4')return Array.from({length:4},()=>Math.floor(Math.random()*256)).join('.');
+            return Array.from({length:8},()=>Math.floor(Math.random()*65536).toString(16).padStart(4,'0')).join(':');
+          });
+        }
+      },
+      'Fechas': {
+        icon:'📅',
+        extra: '<label class="form-label">Rango</label><div style="display:flex;gap:0.4rem"><input type="date" id="date-from" class="form-input" value="2000-01-01"><input type="date" id="date-to" class="form-input"></div>',
+        gen: (n) => {
+          const from=new Date(document.getElementById('date-from')?.value||'2000-01-01').getTime();
+          const to=new Date(document.getElementById('date-to')?.value||new Date()).getTime();
+          return Array.from({length:n},()=>{
+            const d=new Date(from+Math.random()*(to-from));
+            return d.toLocaleDateString('es-ES',{year:'numeric',month:'2-digit',day:'2-digit'});
+          });
+        }
+      },
+      'Ciudades ES': {
+        icon:'🏙',
+        extra: '',
+        gen: (n) => Array.from({length:n},()=>CIUDADES[Math.floor(Math.random()*CIUDADES.length)])
+      },
+      'Colores HEX': {
+        icon:'🎨',
+        extra: '',
+        gen: (n) => Array.from({length:n},()=>'#'+Array.from({length:6},()=>'0123456789ABCDEF'[Math.floor(Math.random()*16)]).join(''))
+      },
+    };
+
+    let currentType = 'Palabras';
+
+    function buildTabs(){
+      const container=document.getElementById('type-tabs');
+      Object.entries(GENERATORS).forEach(([name,{icon}])=>{
+        const btn=document.createElement('button');
+        btn.className='btn btn-secondary';
+        btn.dataset.type=name;
+        btn.textContent=icon+' '+name;
+        btn.onclick=()=>setType(name);
+        container.appendChild(btn);
+      });
+    }
+
+    function setType(type){
+      currentType=type;
+      document.querySelectorAll('#type-tabs button').forEach(b=>{
+        b.className=b.dataset.type===type?'btn btn-primary':'btn btn-secondary';
+      });
+      document.getElementById('gen-title').textContent=GENERATORS[type].icon+' '+type;
+      document.getElementById('extra-opts').innerHTML=GENERATORS[type].extra||'';
+      if(document.getElementById('date-to'))document.getElementById('date-to').value=new Date().toISOString().split('T')[0];
+      generate();
+    }
+
+    function generate(){
+      const n=Math.min(Math.max(parseInt(document.getElementById('gen-count').value)||10,1),200);
+      const results=GENERATORS[currentType].gen(n);
+      document.getElementById('gen-output').textContent=results.join('\n');
+      document.getElementById('gen-count-out').textContent=results.length.toLocaleString('es');
+    }
+
+    function copyResult(){copyText(document.getElementById('gen-output').textContent,document.getElementById('copy-result'));}
+    function downloadResult(){
+      const a=document.createElement('a');
+      a.download='datos-aleatorios.txt';
+      a.href='data:text/plain;charset=utf-8,'+encodeURIComponent(document.getElementById('gen-output').textContent);
+      a.click();
+      showToast('¡Descargado!');
+    }
+
+    document.addEventListener('DOMContentLoaded',()=>{
+      buildTabs();
+      setType('Palabras');
+    });
+  </script>
+</body>
+</html>

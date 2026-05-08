@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Porcentajes Online Gratis | HerramientasPro</title>
+  <meta name="description" content="Calcula porcentajes, aumentos, descuentos y variaciones online gratis. Múltiples tipos de cálculo en una sola herramienta. Sin registro.">
+  <meta name="keywords" content="calculadora porcentajes, calcular porcentaje, descuento porcentaje, aumento precio, variacion porcentual">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles/main.css">
+</head>
+<body>
+  <header class="site-header" id="site-header"></header>
+  <main class="container">
+    <div class="tool-page">
+      <div class="tool-main">
+        <div class="ad-banner" id="ad-top"></div>
+        <nav class="breadcrumb"><a href="/">Inicio</a> › <span>Calculadora de Porcentajes</span></nav>
+        <div class="tool-header">
+          <h1>💯 Calculadora de Porcentajes</h1>
+          <p>Calcula cualquier tipo de porcentaje: básico, descuentos, aumentos, variación y más. Resultado instantáneo.</p>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:1.25rem">
+
+          <!-- Calc 1: X% of Y -->
+          <div class="tool-box">
+            <div class="tool-box-header"><h2>¿Cuánto es el X% de Y?</h2></div>
+            <div class="tool-box-body">
+              <div class="form-row" style="align-items:flex-end">
+                <div class="form-group"><label class="form-label">Porcentaje (%)</label><input type="number" id="c1-pct" class="form-input" placeholder="20" oninput="calc1()"></div>
+                <div class="form-group"><label class="form-label">De</label><input type="number" id="c1-val" class="form-input" placeholder="150" oninput="calc1()"></div>
+              </div>
+              <div class="output-box" id="c1-out" style="font-size:1.2rem;font-weight:700;min-height:52px;display:flex;align-items:center">
+                <button class="copy-btn" onclick="copyText(document.getElementById('c1-out').querySelector('span')?.textContent||'')">Copiar</button>
+                <span>—</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Calc 2: X is what % of Y -->
+          <div class="tool-box">
+            <div class="tool-box-header"><h2>¿X es qué porcentaje de Y?</h2></div>
+            <div class="tool-box-body">
+              <div class="form-row" style="align-items:flex-end">
+                <div class="form-group"><label class="form-label">Valor X</label><input type="number" id="c2-x" class="form-input" placeholder="30" oninput="calc2()"></div>
+                <div class="form-group"><label class="form-label">Total Y</label><input type="number" id="c2-y" class="form-input" placeholder="150" oninput="calc2()"></div>
+              </div>
+              <div class="output-box" id="c2-out" style="font-size:1.2rem;font-weight:700;min-height:52px;display:flex;align-items:center">
+                <button class="copy-btn" onclick="copyText(document.getElementById('c2-out').querySelector('span')?.textContent||'')">Copiar</button>
+                <span>—</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Calc 3: Discount -->
+          <div class="tool-box">
+            <div class="tool-box-header"><h2>Precio con descuento / aumento</h2></div>
+            <div class="tool-box-body">
+              <div class="form-row" style="align-items:flex-end">
+                <div class="form-group"><label class="form-label">Precio original</label><input type="number" id="c3-price" class="form-input" placeholder="100" oninput="calc3()"></div>
+                <div class="form-group"><label class="form-label">Porcentaje (%)</label><input type="number" id="c3-pct" class="form-input" placeholder="20" oninput="calc3()"></div>
+                <div class="form-group"><label class="form-label">Tipo</label>
+                  <select id="c3-type" class="form-input" onchange="calc3()">
+                    <option value="discount">Descuento (−%)</option>
+                    <option value="increase">Aumento (+%)</option>
+                  </select>
+                </div>
+              </div>
+              <div id="c3-out" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.75rem;margin-top:0.5rem">
+                <div class="stat-chip"><strong id="c3-new">—</strong>Precio final</div>
+                <div class="stat-chip"><strong id="c3-diff">—</strong>Diferencia</div>
+                <div class="stat-chip"><strong id="c3-pct-show">—</strong>Porcentaje</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Calc 4: % change -->
+          <div class="tool-box">
+            <div class="tool-box-header"><h2>Variación porcentual entre dos valores</h2></div>
+            <div class="tool-box-body">
+              <div class="form-row" style="align-items:flex-end">
+                <div class="form-group"><label class="form-label">Valor inicial</label><input type="number" id="c4-a" class="form-input" placeholder="80" oninput="calc4()"></div>
+                <div class="form-group"><label class="form-label">Valor final</label><input type="number" id="c4-b" class="form-input" placeholder="100" oninput="calc4()"></div>
+              </div>
+              <div class="output-box" id="c4-out" style="font-size:1.2rem;font-weight:700;min-height:52px;display:flex;align-items:center">
+                <button class="copy-btn" onclick="copyText(document.getElementById('c4-out').querySelector('span')?.textContent||'')">Copiar</button>
+                <span>—</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Calc 5: Reverse % -->
+          <div class="tool-box">
+            <div class="tool-box-header"><h2>Calcular el total desde una parte y su porcentaje</h2></div>
+            <div class="tool-box-body">
+              <div class="form-row" style="align-items:flex-end">
+                <div class="form-group"><label class="form-label">Valor parcial</label><input type="number" id="c5-part" class="form-input" placeholder="25" oninput="calc5()"></div>
+                <div class="form-group"><label class="form-label">Es el X% del total</label><input type="number" id="c5-pct" class="form-input" placeholder="20" oninput="calc5()"></div>
+              </div>
+              <div class="output-box" id="c5-out" style="font-size:1.2rem;font-weight:700;min-height:52px;display:flex;align-items:center">
+                <button class="copy-btn" onclick="copyText(document.getElementById('c5-out').querySelector('span')?.textContent||'')">Copiar</button>
+                <span>—</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;justify-content:center;margin:1.5rem 0">
+          <div class="ad-rectangle" id="ad-mid"></div>
+        </div>
+
+        <div class="related-tools">
+          <h2 class="section-title" style="font-size:1rem">Herramientas relacionadas</h2>
+          <div class="tools-grid" style="grid-template-columns:repeat(auto-fill,minmax(180px,1fr))">
+            <a class="tool-card" href="calculadora-fechas.html"><span class="tool-icon">📅</span><h3>Fechas</h3><p>Calcula días entre fechas.</p><span class="tool-link">Usar →</span></a>
+            <a class="tool-card" href="conversor-unidades.html"><span class="tool-icon">📐</span><h3>Unidades</h3><p>Conversión de unidades.</p><span class="tool-link">Usar →</span></a>
+            <a class="tool-card" href="conversor-bytes.html"><span class="tool-icon">💾</span><h3>Bytes</h3><p>KB, MB, GB conversión.</p><span class="tool-link">Usar →</span></a>
+          </div>
+        </div>
+      </div>
+      <aside class="tool-sidebar"><div class="ad-sidebar" id="ad-sidebar"></div></aside>
+    </div>
+  </main>
+  <footer class="site-footer" id="site-footer"></footer>
+  <script src="../js/app.js"></script>
+  <script>
+    function fmt(n){return isNaN(n)?'—':parseFloat(n.toFixed(4)).toLocaleString('es');}
+    function setOut(id,text,color='var(--text)'){
+      const el=document.getElementById(id);
+      el.querySelector('span').textContent=text;
+      el.querySelector('span').style.color=color;
+    }
+    function calc1(){
+      const p=parseFloat(document.getElementById('c1-pct').value);
+      const v=parseFloat(document.getElementById('c1-val').value);
+      const r=p/100*v;
+      setOut('c1-out',isNaN(r)?'—':`${fmt(r)} (${fmt(p)}% de ${fmt(v)})`);
+    }
+    function calc2(){
+      const x=parseFloat(document.getElementById('c2-x').value);
+      const y=parseFloat(document.getElementById('c2-y').value);
+      const r=x/y*100;
+      setOut('c2-out',isNaN(r)?'—':`${fmt(r)}% (${fmt(x)} es el ${fmt(r)}% de ${fmt(y)})`);
+    }
+    function calc3(){
+      const price=parseFloat(document.getElementById('c3-price').value);
+      const pct=parseFloat(document.getElementById('c3-pct').value);
+      const type=document.getElementById('c3-type').value;
+      if(isNaN(price)||isNaN(pct))return;
+      const diff=price*pct/100;
+      const newPrice=type==='discount'?price-diff:price+diff;
+      document.getElementById('c3-new').textContent=fmt(newPrice);
+      document.getElementById('c3-diff').textContent=(type==='discount'?'−':'+')+fmt(diff);
+      document.getElementById('c3-pct-show').textContent=pct+'%';
+    }
+    function calc4(){
+      const a=parseFloat(document.getElementById('c4-a').value);
+      const b=parseFloat(document.getElementById('c4-b').value);
+      const r=((b-a)/Math.abs(a))*100;
+      const color=r>0?'var(--success)':r<0?'var(--error)':'var(--text)';
+      setOut('c4-out',isNaN(r)?'—':`${r>=0?'+':''}${fmt(r)}% (${a} → ${b})`,color);
+    }
+    function calc5(){
+      const part=parseFloat(document.getElementById('c5-part').value);
+      const pct=parseFloat(document.getElementById('c5-pct').value);
+      const r=part/pct*100;
+      setOut('c5-out',isNaN(r)?'—':`Total = ${fmt(r)} (${fmt(part)} es el ${fmt(pct)}% de ${fmt(r)})`);
+    }
+  </script>
+</body>
+</html>

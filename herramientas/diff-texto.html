@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diferenciador de Texto Online Gratis | HerramientasPro</title>
+  <meta name="description" content="Compara dos textos y resalta las diferencias línea a línea online gratis. Perfecto para comparar versiones de código o documentos. Sin registro.">
+  <meta name="keywords" content="diferenciador texto, comparar textos, diff online, text diff, comparar versiones, diff checker">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles/main.css">
+  <style>
+    .diff-added    { background:rgba(16,185,129,0.15); border-left:3px solid var(--success); padding-left:0.5rem; }
+    .diff-removed  { background:rgba(239,68,68,0.12);  border-left:3px solid var(--error);   padding-left:0.5rem; }
+    .diff-equal    { color:var(--text2); padding-left:0.5rem; }
+    .diff-line     { display:block; font-size:0.85rem; font-family:'Cascadia Code','Fira Code',monospace; padding:0.15rem 0; white-space:pre-wrap; word-break:break-all; }
+    .diff-num      { display:inline-block; width:36px; text-align:right; margin-right:0.75rem; color:var(--text3); font-size:0.75rem; user-select:none; }
+  </style>
+</head>
+<body>
+  <header class="site-header" id="site-header"></header>
+  <main class="container">
+    <div class="tool-page">
+      <div class="tool-main">
+        <div class="ad-banner" id="ad-top"></div>
+        <nav class="breadcrumb"><a href="/">Inicio</a> › <span>Diferenciador de Texto</span></nav>
+        <div class="tool-header">
+          <h1>🔍 Diferenciador de Texto</h1>
+          <p>Compara dos textos línea a línea y visualiza las diferencias resaltadas. Ideal para comparar versiones de código o documentos.</p>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+          <div class="tool-box">
+            <div class="tool-box-header"><h2>Texto A (original)</h2></div>
+            <div class="tool-box-body" style="padding:0">
+              <textarea id="text-a" class="form-textarea" style="border:none;border-radius:0;min-height:240px;font-size:0.85rem;resize:none" placeholder="Pega el texto original aquí..." spellcheck="false" oninput="compare()"></textarea>
+            </div>
+          </div>
+          <div class="tool-box">
+            <div class="tool-box-header"><h2>Texto B (modificado)</h2></div>
+            <div class="tool-box-body" style="padding:0">
+              <textarea id="text-b" class="form-textarea" style="border:none;border-radius:0;min-height:240px;font-size:0.85rem;resize:none" placeholder="Pega el texto modificado aquí..." spellcheck="false" oninput="compare()"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-wrap:wrap;gap:0.75rem;align-items:center;margin:1rem 0">
+          <button class="btn btn-primary" onclick="compare()">🔍 Comparar</button>
+          <button class="btn btn-secondary" onclick="loadExample()">Cargar ejemplo</button>
+          <button class="btn btn-secondary" onclick="clearAll()">Limpiar</button>
+          <label class="checkbox-item">
+            <input type="checkbox" id="ignore-case" onchange="compare()"> Ignorar mayúsculas
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" id="ignore-whitespace" onchange="compare()"> Ignorar espacios extra
+          </label>
+        </div>
+
+        <div class="stats-row">
+          <div class="stat-chip"><strong id="d-added">0</strong>Añadidas</div>
+          <div class="stat-chip"><strong id="d-removed">0</strong>Eliminadas</div>
+          <div class="stat-chip"><strong id="d-equal">0</strong>Sin cambios</div>
+          <div class="stat-chip"><strong id="d-similar">—</strong>Similitud</div>
+        </div>
+
+        <div class="tool-box" style="margin-top:1rem">
+          <div class="tool-box-header">
+            <h2>Resultado</h2>
+            <div style="display:flex;gap:0.6rem;font-size:0.75rem;align-items:center">
+              <span style="color:var(--success)">▌ Añadido</span>
+              <span style="color:var(--error)">▌ Eliminado</span>
+              <span style="color:var(--text3)">▌ Sin cambio</span>
+            </div>
+          </div>
+          <div class="tool-box-body">
+            <div id="diff-output" style="min-height:150px;color:var(--text3);font-size:0.875rem">
+              Pega ambos textos para ver las diferencias.
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;justify-content:center;margin:1.5rem 0">
+          <div class="ad-rectangle" id="ad-mid"></div>
+        </div>
+
+        <div class="related-tools">
+          <h2 class="section-title" style="font-size:1rem">Herramientas relacionadas</h2>
+          <div class="tools-grid" style="grid-template-columns:repeat(auto-fill,minmax(180px,1fr))">
+            <a class="tool-card" href="contador-palabras.html"><span class="tool-icon">🔢</span><h3>Contador</h3><p>Analiza texto en detalle.</p><span class="tool-link">Usar →</span></a>
+            <a class="tool-card" href="minificador.html"><span class="tool-icon">⚡</span><h3>Minificador</h3><p>Minifica CSS y JS.</p><span class="tool-link">Usar →</span></a>
+            <a class="tool-card" href="cambiar-caso.html"><span class="tool-icon">🔤</span><h3>Cambiar Caso</h3><p>Mayúsculas / minúsculas.</p><span class="tool-link">Usar →</span></a>
+          </div>
+        </div>
+      </div>
+      <aside class="tool-sidebar"><div class="ad-sidebar" id="ad-sidebar"></div></aside>
+    </div>
+  </main>
+  <footer class="site-footer" id="site-footer"></footer>
+  <script src="../js/app.js"></script>
+  <script>
+    // LCS-based diff
+    function lcs(a, b) {
+      const m=a.length, n=b.length;
+      const dp=Array.from({length:m+1},()=>new Array(n+1).fill(0));
+      for(let i=1;i<=m;i++) for(let j=1;j<=n;j++)
+        dp[i][j]=a[i-1]===b[j-1]?dp[i-1][j-1]+1:Math.max(dp[i-1][j],dp[i][j-1]);
+      const result=[];
+      let i=m,j=n;
+      while(i>0||j>0){
+        if(i>0&&j>0&&a[i-1]===b[j-1]){result.unshift({type:'equal',val:a[i-1]});i--;j--;}
+        else if(j>0&&(i===0||dp[i][j-1]>=dp[i-1][j])){result.unshift({type:'added',val:b[j-1]});j--;}
+        else{result.unshift({type:'removed',val:a[i-1]});i--;}
+      }
+      return result;
+    }
+
+    function compare(){
+      let a=document.getElementById('text-a').value;
+      let b=document.getElementById('text-b').value;
+      const ignCase=document.getElementById('ignore-case').checked;
+      const ignWS=document.getElementById('ignore-whitespace').checked;
+
+      if(!a&&!b){document.getElementById('diff-output').innerHTML='<span style="color:var(--text3)">Pega ambos textos para ver las diferencias.</span>';return;}
+
+      let aLines=a.split('\n');
+      let bLines=b.split('\n');
+
+      if(ignCase){aLines=aLines.map(l=>l.toLowerCase());bLines=bLines.map(l=>l.toLowerCase());}
+      if(ignWS){aLines=aLines.map(l=>l.replace(/\s+/g,' ').trim());bLines=bLines.map(l=>l.replace(/\s+/g,' ').trim());}
+
+      const diff=lcs(aLines,bLines);
+      let added=0,removed=0,equal=0;
+      let aNum=0,bNum=0;
+
+      const html=diff.map(d=>{
+        if(d.type==='equal'){equal++;aNum++;bNum++;return`<div class="diff-equal"><span class="diff-line"><span class="diff-num">${aNum}</span>${escHtml(d.val)}</span></div>`;}
+        if(d.type==='removed'){removed++;aNum++;return`<div class="diff-removed"><span class="diff-line"><span class="diff-num">${aNum}</span>${escHtml(d.val)}</span></div>`;}
+        added++;bNum++;return`<div class="diff-added"><span class="diff-line"><span class="diff-num">${bNum}</span>${escHtml(d.val)}</span></div>`;
+      }).join('');
+
+      document.getElementById('diff-output').innerHTML=html||'<span style="color:var(--success)">✓ Los textos son idénticos.</span>';
+      document.getElementById('d-added').textContent=added;
+      document.getElementById('d-removed').textContent=removed;
+      document.getElementById('d-equal').textContent=equal;
+      const total=added+removed+equal;
+      document.getElementById('d-similar').textContent=total?Math.round((equal/total)*100)+'%':'—';
+    }
+
+    function escHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+    function clearAll(){document.getElementById('text-a').value='';document.getElementById('text-b').value='';compare();}
+
+    function loadExample(){
+      document.getElementById('text-a').value=`function saludar(nombre) {\n  console.log('Hola, ' + nombre);\n  return true;\n}\n\nconst resultado = saludar('Mundo');`;
+      document.getElementById('text-b').value=`function saludar(nombre, apellido) {\n  console.log(\`Hola, \${nombre} \${apellido}!\`);\n  // Nueva línea añadida\n  return nombre.length > 0;\n}\n\nconst resultado = saludar('Juan', 'García');`;
+      compare();
+    }
+  </script>
+</body>
+</html>

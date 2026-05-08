@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generador de UUID Online Gratis | HerramientasPro</title>
+  <meta name="description" content="Genera UUIDs v4 únicos y aleatorios online gratis. Genera uno o en lote, copia con un clic. Sin registro ni instalación.">
+  <meta name="keywords" content="generador uuid, uuid v4, guid generator, uuid online, generar uuid gratis">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles/main.css">
+</head>
+<body>
+  <header class="site-header" id="site-header"></header>
+  <main class="container">
+    <div class="tool-page">
+      <div class="tool-main">
+        <div class="ad-banner" id="ad-top"></div>
+        <nav class="breadcrumb"><a href="/">Inicio</a> › <span>Generador UUID</span></nav>
+        <div class="tool-header">
+          <h1>🎲 Generador de UUID v4</h1>
+          <p>Genera identificadores únicos universales (UUID v4) al instante. Usa la API criptográfica del navegador para máxima aleatoriedad.</p>
+        </div>
+
+        <div class="tool-box">
+          <div class="tool-box-header"><h2>UUID generado</h2></div>
+          <div class="tool-box-body">
+            <div class="output-box" style="font-size:1.2rem;letter-spacing:0.04em;min-height:56px;display:flex;align-items:center">
+              <button class="copy-btn" id="copy-single" onclick="copySingle()">Copiar</button>
+              <span id="uuid-single">Cargando...</span>
+            </div>
+            <div class="btn-group">
+              <button class="btn btn-primary" onclick="genSingle()">⟳ Nuevo UUID</button>
+              <button class="btn btn-secondary" onclick="copySingle()">📋 Copiar</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="tool-box" style="margin-top:1.25rem">
+          <div class="tool-box-header">
+            <h2>Generar en lote</h2>
+          </div>
+          <div class="tool-box-body">
+            <div class="form-row" style="align-items:flex-end">
+              <div class="form-group" style="flex:0 0 180px">
+                <label class="form-label">Cantidad</label>
+                <input type="number" id="batch-count" class="form-input" value="10" min="1" max="1000">
+              </div>
+              <div class="form-group" style="flex:0 0 200px">
+                <label class="form-label">Formato</label>
+                <select id="uuid-format" class="form-input">
+                  <option value="standard">Estándar (con guiones)</option>
+                  <option value="compact">Compacto (sin guiones)</option>
+                  <option value="upper">MAYÚSCULAS</option>
+                  <option value="braces">Con llaves {UUID}</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">&nbsp;</label>
+                <button class="btn btn-primary" onclick="genBatch()">Generar lote</button>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Resultado</label>
+              <div class="output-box" id="batch-out" style="min-height:200px;white-space:pre-line;font-size:0.85rem">
+                <button class="copy-btn" id="copy-batch" onclick="copyBatch()">Copiar</button>
+                Haz clic en "Generar lote" para empezar.
+              </div>
+            </div>
+            <div class="btn-group">
+              <button class="btn btn-secondary" onclick="copyBatch()">📋 Copiar todos</button>
+              <button class="btn btn-secondary" onclick="downloadBatch()">⬇ Descargar .txt</button>
+            </div>
+            <div class="stats-row" style="margin-top:1rem">
+              <div class="stat-chip"><strong id="b-count">—</strong>generados</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;justify-content:center;margin:1.5rem 0">
+          <div class="ad-rectangle" id="ad-mid"></div>
+        </div>
+
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem">
+          <h2 style="font-size:1rem;font-weight:700;margin-bottom:0.75rem">¿Qué es un UUID?</h2>
+          <p style="color:var(--text2);font-size:0.875rem;line-height:1.7">Un UUID (Universally Unique Identifier) es un identificador estándar de 128 bits. La versión 4 usa números aleatorios y tiene una probabilidad de colisión prácticamente cero. Se usa en bases de datos, APIs, sistemas distribuidos y cualquier aplicación que necesite IDs únicos sin coordinación central.</p>
+          <p style="color:var(--text2);font-size:0.875rem;margin-top:0.75rem">Formato: <code style="color:var(--accent)">xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx</code> donde <code style="color:var(--accent)">y</code> es 8, 9, a o b.</p>
+        </div>
+
+        <div class="related-tools">
+          <h2 class="section-title" style="font-size:1rem">Herramientas relacionadas</h2>
+          <div class="tools-grid" style="grid-template-columns:repeat(auto-fill,minmax(180px,1fr))">
+            <a class="tool-card" href="generador-contrasenas.html"><span class="tool-icon">🔐</span><h3>Contraseñas</h3><p>Contraseñas aleatorias seguras.</p><span class="tool-link">Usar →</span></a>
+            <a class="tool-card" href="base64.html"><span class="tool-icon">🔄</span><h3>Base64</h3><p>Codifica datos en Base64.</p><span class="tool-link">Usar →</span></a>
+            <a class="tool-card" href="texto-aleatorio.html"><span class="tool-icon">🎰</span><h3>Texto Aleatorio</h3><p>Genera texto al azar.</p><span class="tool-link">Usar →</span></a>
+          </div>
+        </div>
+      </div>
+      <aside class="tool-sidebar"><div class="ad-sidebar" id="ad-sidebar"></div></aside>
+    </div>
+  </main>
+  <footer class="site-footer" id="site-footer"></footer>
+  <script src="../js/app.js"></script>
+  <script>
+    function uuidv4() {
+      return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+        (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16));
+    }
+    function applyFormat(uuid) {
+      const fmt = document.getElementById('uuid-format').value;
+      if (fmt === 'compact') return uuid.replace(/-/g,'');
+      if (fmt === 'upper') return uuid.toUpperCase();
+      if (fmt === 'braces') return '{' + uuid.toUpperCase() + '}';
+      return uuid;
+    }
+    function genSingle() {
+      document.getElementById('uuid-single').textContent = uuidv4();
+    }
+    function copySingle() {
+      copyText(document.getElementById('uuid-single').textContent, document.getElementById('copy-single'));
+    }
+    function genBatch() {
+      const n = Math.min(Math.max(parseInt(document.getElementById('batch-count').value)||10,1),1000);
+      const uuids = Array.from({length:n}, () => applyFormat(uuidv4())).join('\n');
+      document.getElementById('batch-out').childNodes[1] && (document.getElementById('batch-out').innerHTML = '<button class="copy-btn" id="copy-batch" onclick="copyBatch()">Copiar</button>' + uuids);
+      document.getElementById('b-count').textContent = n.toLocaleString('es');
+    }
+    function copyBatch() {
+      const text = document.getElementById('batch-out').textContent.trim();
+      copyText(text, document.getElementById('copy-batch'));
+    }
+    function downloadBatch() {
+      const text = document.getElementById('batch-out').textContent.trim();
+      if (!text || text.includes('clic')) { showToast('Genera un lote primero','error'); return; }
+      const a = document.createElement('a');
+      a.download = 'uuids.txt';
+      a.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(text);
+      a.click();
+      showToast('¡Descargado!');
+    }
+    document.addEventListener('DOMContentLoaded', genSingle);
+  </script>
+</body>
+</html>

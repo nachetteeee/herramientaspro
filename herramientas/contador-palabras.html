@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contador de Palabras y Caracteres Online Gratis | HerramientasPro</title>
+  <meta name="description" content="Cuenta palabras, caracteres, frases, párrafos y tiempo de lectura de cualquier texto. Herramienta online gratuita y sin registro.">
+  <meta name="keywords" content="contador palabras, contar palabras online, contador caracteres, word count, contador texto">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles/main.css">
+</head>
+<body>
+  <header class="site-header" id="site-header"></header>
+
+  <main class="container">
+    <div class="tool-page">
+      <div class="tool-main">
+
+        <div class="ad-banner" id="ad-top"></div>
+
+        <nav class="breadcrumb">
+          <a href="/">Inicio</a> › <span>Contador de Palabras</span>
+        </nav>
+
+        <div class="tool-header">
+          <h1>🔢 Contador de Palabras y Caracteres</h1>
+          <p>Pega o escribe tu texto y obtén al instante el conteo de palabras, caracteres, frases, párrafos y el tiempo estimado de lectura.</p>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-row" id="stats">
+          <div class="stat-chip"><strong id="s-words">0</strong>Palabras</div>
+          <div class="stat-chip"><strong id="s-chars">0</strong>Caracteres</div>
+          <div class="stat-chip"><strong id="s-chars-ns">0</strong>Sin espacios</div>
+          <div class="stat-chip"><strong id="s-sentences">0</strong>Frases</div>
+          <div class="stat-chip"><strong id="s-paragraphs">0</strong>Párrafos</div>
+          <div class="stat-chip"><strong id="s-reading">0 seg</strong>Lectura</div>
+        </div>
+
+        <div class="tool-box">
+          <div class="tool-box-header">
+            <h2>Texto de entrada</h2>
+            <div style="display:flex;gap:0.5rem">
+              <button class="btn btn-secondary" style="font-size:0.75rem;padding:0.3rem 0.7rem" onclick="clearText()">Limpiar</button>
+              <button class="btn btn-secondary" style="font-size:0.75rem;padding:0.3rem 0.7rem" onclick="copyOutput()">📋 Copiar</button>
+            </div>
+          </div>
+          <div class="tool-box-body" style="padding:0">
+            <textarea
+              id="text-input"
+              class="form-textarea"
+              style="border:none;border-radius:0;min-height:280px;font-family:inherit;font-size:0.95rem;resize:vertical"
+              placeholder="Escribe o pega tu texto aquí..."
+              oninput="analyze()"
+            ></textarea>
+          </div>
+        </div>
+
+        <!-- Options -->
+        <div style="display:flex;flex-wrap:wrap;gap:0.75rem;margin:1rem 0;align-items:center">
+          <label class="form-label" style="margin:0">Velocidad de lectura:</label>
+          <select id="reading-speed" class="form-input" style="width:auto;padding:0.4rem 0.75rem" onchange="analyze()">
+            <option value="200">Lenta (200 ppm)</option>
+            <option value="250" selected>Normal (250 ppm)</option>
+            <option value="300">Rápida (300 ppm)</option>
+          </select>
+        </div>
+
+        <!-- Keyword density -->
+        <div class="tool-box" style="margin-top:1.25rem">
+          <div class="tool-box-header"><h2>Palabras más frecuentes</h2></div>
+          <div class="tool-box-body">
+            <div id="freq-table" style="color:var(--text3);font-size:0.875rem">
+              Escribe texto para ver las palabras más frecuentes.
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;justify-content:center;margin:1.5rem 0">
+          <div class="ad-rectangle" id="ad-mid"></div>
+        </div>
+
+        <!-- Related -->
+        <div class="related-tools">
+          <h2 class="section-title" style="font-size:1rem">Herramientas relacionadas</h2>
+          <div class="tools-grid" style="grid-template-columns:repeat(auto-fill,minmax(180px,1fr))">
+            <a class="tool-card" href="cambiar-caso.html">
+              <span class="tool-icon">🔤</span>
+              <h3>Mayúsculas / Minúsculas</h3>
+              <p>Cambia el caso del texto.</p>
+              <span class="tool-link">Usar →</span>
+            </a>
+            <a class="tool-card" href="lorem-ipsum.html">
+              <span class="tool-icon">📝</span>
+              <h3>Lorem Ipsum</h3>
+              <p>Genera texto de relleno.</p>
+              <span class="tool-link">Usar →</span>
+            </a>
+            <a class="tool-card" href="diff-texto.html">
+              <span class="tool-icon">🔍</span>
+              <h3>Diferenciador de Texto</h3>
+              <p>Compara dos textos.</p>
+              <span class="tool-link">Usar →</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <aside class="tool-sidebar">
+        <div class="ad-sidebar" id="ad-sidebar"></div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="site-footer" id="site-footer"></footer>
+  <script src="../js/app.js"></script>
+  <script>
+    const STOP_WORDS = new Set(['de','la','el','en','y','a','los','las','que','se','del','es','un','una','por','con','no','para','su','al','lo','le','más','pero','como','si','fue','o','sus','me','ya','ha','mi','te','tu','son','hay','muy','este','esta','esto','están','era','ser','han','una','este','esos','estas','ellos','ella','entre','cuando','también','sobre','todo','otros','nos','sin','les','ya','bien','puede','hacer','tiene','año','dos','años','parte']);
+
+    function analyze() {
+      const text = document.getElementById('text-input').value;
+      const speed = parseInt(document.getElementById('reading-speed').value);
+
+      // Words
+      const words = text.trim() === '' ? [] : text.trim().split(/\s+/).filter(w => w.length > 0);
+      document.getElementById('s-words').textContent = words.length.toLocaleString('es');
+
+      // Characters
+      document.getElementById('s-chars').textContent = text.length.toLocaleString('es');
+      document.getElementById('s-chars-ns').textContent = text.replace(/\s/g, '').length.toLocaleString('es');
+
+      // Sentences
+      const sentences = text.trim() === '' ? 0 : (text.match(/[.!?]+/g) || []).length || (text.trim() ? 1 : 0);
+      document.getElementById('s-sentences').textContent = sentences.toLocaleString('es');
+
+      // Paragraphs
+      const paragraphs = text.trim() === '' ? 0 : text.split(/\n\s*\n/).filter(p => p.trim()).length || (text.trim() ? 1 : 0);
+      document.getElementById('s-paragraphs').textContent = paragraphs.toLocaleString('es');
+
+      // Reading time
+      const mins = words.length / speed;
+      let readingStr;
+      if (mins < 1) readingStr = Math.round(mins * 60) + ' seg';
+      else if (mins < 60) readingStr = Math.round(mins) + ' min';
+      else readingStr = Math.floor(mins / 60) + 'h ' + Math.round(mins % 60) + 'm';
+      document.getElementById('s-reading').textContent = readingStr;
+
+      // Frequency
+      if (words.length > 0) {
+        const freq = {};
+        words.forEach(w => {
+          const clean = w.toLowerCase().replace(/[^a-záéíóúüñ]/gi, '');
+          if (clean.length > 2 && !STOP_WORDS.has(clean)) {
+            freq[clean] = (freq[clean] || 0) + 1;
+          }
+        });
+        const sorted = Object.entries(freq).sort((a, b) => b[1] - a[1]).slice(0, 10);
+        const max = sorted[0]?.[1] || 1;
+        document.getElementById('freq-table').innerHTML = sorted.map(([word, count]) => `
+          <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.5rem">
+            <span style="color:var(--text);font-weight:600;min-width:120px;font-size:0.875rem">${word}</span>
+            <div style="flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden">
+              <div style="width:${(count/max)*100}%;height:100%;background:var(--accent);border-radius:3px"></div>
+            </div>
+            <span style="color:var(--text2);font-size:0.8rem;min-width:30px;text-align:right">${count}</span>
+          </div>
+        `).join('') || '<span style="color:var(--text3)">Sin palabras significativas aún.</span>';
+      } else {
+        document.getElementById('freq-table').innerHTML = '<span style="color:var(--text3)">Escribe texto para ver las palabras más frecuentes.</span>';
+      }
+    }
+
+    function clearText() {
+      document.getElementById('text-input').value = '';
+      analyze();
+    }
+
+    function copyOutput() {
+      copyText(document.getElementById('text-input').value);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Conversor Binario Decimal Hexadecimal Octal Online | HerramientasPro</title>
+  <meta name="description" content="Convierte entre binario, decimal, hexadecimal y octal online gratis. Conversión en tiempo real con tabla de referencia. Sin registro.">
+  <meta name="keywords" content="conversor binario decimal, binario a hexadecimal, decimal a binario, conversor base numerica, octal hexadecimal">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles/main.css">
+</head>
+<body>
+  <header class="site-header" id="site-header"></header>
+  <main class="container">
+    <div class="tool-page">
+      <div class="tool-main">
+        <div class="ad-banner" id="ad-top"></div>
+        <nav class="breadcrumb"><a href="/">Inicio</a> › <span>Conversor Numérico</span></nav>
+        <div class="tool-header">
+          <h1>💻 Conversor Binario / Decimal / Hex / Octal</h1>
+          <p>Convierte números entre cualquier base numérica al instante. Escribe en cualquier campo para convertir a todos los demás.</p>
+        </div>
+
+        <div class="tool-box">
+          <div class="tool-box-header"><h2>Conversión de bases</h2></div>
+          <div class="tool-box-body">
+            <div style="display:flex;flex-direction:column;gap:1rem">
+              <div class="form-group" style="margin:0">
+                <label class="form-label">🔟 Decimal (base 10)</label>
+                <div style="display:flex;gap:0.5rem">
+                  <input type="text" id="dec" class="form-input" placeholder="255" oninput="convert('dec')">
+                  <button class="btn btn-secondary" style="padding:0.6rem 0.75rem" onclick="copyText(document.getElementById('dec').value)">📋</button>
+                </div>
+              </div>
+              <div class="form-group" style="margin:0">
+                <label class="form-label">🔢 Binario (base 2)</label>
+                <div style="display:flex;gap:0.5rem">
+                  <input type="text" id="bin" class="form-input" placeholder="11111111" oninput="convert('bin')" style="font-family:monospace">
+                  <button class="btn btn-secondary" style="padding:0.6rem 0.75rem" onclick="copyText(document.getElementById('bin').value)">📋</button>
+                </div>
+              </div>
+              <div class="form-group" style="margin:0">
+                <label class="form-label">🔡 Hexadecimal (base 16)</label>
+                <div style="display:flex;gap:0.5rem">
+                  <input type="text" id="hex" class="form-input" placeholder="FF" oninput="convert('hex')" style="font-family:monospace;text-transform:uppercase">
+                  <button class="btn btn-secondary" style="padding:0.6rem 0.75rem" onclick="copyText(document.getElementById('hex').value)">📋</button>
+                </div>
+              </div>
+              <div class="form-group" style="margin:0">
+                <label class="form-label">8️⃣ Octal (base 8)</label>
+                <div style="display:flex;gap:0.5rem">
+                  <input type="text" id="oct" class="form-input" placeholder="377" oninput="convert('oct')" style="font-family:monospace">
+                  <button class="btn btn-secondary" style="padding:0.6rem 0.75rem" onclick="copyText(document.getElementById('oct').value)">📋</button>
+                </div>
+              </div>
+            </div>
+
+            <div id="conv-error" style="color:var(--error);font-size:0.85rem;margin-top:1rem;display:none"></div>
+
+            <div class="stats-row" style="margin-top:1.25rem">
+              <div class="stat-chip"><strong id="info-dec">—</strong>Decimal</div>
+              <div class="stat-chip"><strong id="info-bits">—</strong>Bits</div>
+              <div class="stat-chip"><strong id="info-bytes">—</strong>Bytes</div>
+              <div class="stat-chip"><strong id="info-sign">—</strong>Signo</div>
+            </div>
+
+            <div class="btn-group"><button class="btn btn-secondary" onclick="clearAll()">Limpiar</button></div>
+          </div>
+        </div>
+
+        <!-- Quick reference table -->
+        <div class="tool-box" style="margin-top:1.25rem">
+          <div class="tool-box-header"><h2>Tabla de referencia (0–15)</h2></div>
+          <div class="tool-box-body" style="overflow-x:auto">
+            <table style="width:100%;border-collapse:collapse;font-size:0.85rem;font-family:monospace">
+              <thead>
+                <tr style="border-bottom:1px solid var(--border)">
+                  <th style="padding:0.5rem;text-align:left;color:var(--text2)">Dec</th>
+                  <th style="padding:0.5rem;text-align:left;color:var(--text2)">Bin</th>
+                  <th style="padding:0.5rem;text-align:left;color:var(--text2)">Hex</th>
+                  <th style="padding:0.5rem;text-align:left;color:var(--text2)">Oct</th>
+                </tr>
+              </thead>
+              <tbody id="ref-table"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div style="display:flex;justify-content:center;margin:1.5rem 0">
+          <div class="ad-rectangle" id="ad-mid"></div>
+        </div>
+
+        <div class="related-tools">
+          <h2 class="section-title" style="font-size:1rem">Herramientas relacionadas</h2>
+          <div class="tools-grid" style="grid-template-columns:repeat(auto-fill,minmax(180px,1fr))">
+            <a class="tool-card" href="color-conversor.html"><span class="tool-icon">🎨</span><h3>Conversor Colores</h3><p>HEX, RGB, HSL.</p><span class="tool-link">Usar →</span></a>
+            <a class="tool-card" href="conversor-bytes.html"><span class="tool-icon">💾</span><h3>Conversor Bytes</h3><p>KB, MB, GB, TB.</p><span class="tool-link">Usar →</span></a>
+            <a class="tool-card" href="porcentajes.html"><span class="tool-icon">💯</span><h3>Porcentajes</h3><p>Calculos de porcentaje.</p><span class="tool-link">Usar →</span></a>
+          </div>
+        </div>
+      </div>
+      <aside class="tool-sidebar"><div class="ad-sidebar" id="ad-sidebar"></div></aside>
+    </div>
+  </main>
+  <footer class="site-footer" id="site-footer"></footer>
+  <script src="../js/app.js"></script>
+  <script>
+    function convert(src) {
+      const errEl=document.getElementById('conv-error');
+      errEl.style.display='none';
+      const val=document.getElementById(src).value.trim().toUpperCase().replace(/\s/g,'');
+      if(!val){['dec','bin','hex','oct'].forEach(id=>{if(id!==src)document.getElementById(id).value='';});updateInfo(null);return;}
+      try {
+        let n;
+        if(src==='dec')n=BigInt(val);
+        else if(src==='bin')n=BigInt('0b'+val);
+        else if(src==='hex')n=BigInt('0x'+val);
+        else n=BigInt('0o'+val);
+        if(n<0n)throw new Error('Solo positivos soportados');
+        if(src!=='dec')document.getElementById('dec').value=n.toString(10);
+        if(src!=='bin')document.getElementById('bin').value=n.toString(2);
+        if(src!=='hex')document.getElementById('hex').value=n.toString(16).toUpperCase();
+        if(src!=='oct')document.getElementById('oct').value=n.toString(8);
+        updateInfo(n);
+      } catch(e) {
+        errEl.textContent='⚠ Valor inválido para la base seleccionada';
+        errEl.style.display='block';
+      }
+    }
+    function updateInfo(n) {
+      if(n===null){['info-dec','info-bits','info-bytes','info-sign'].forEach(id=>document.getElementById(id).textContent='—');return;}
+      document.getElementById('info-dec').textContent=n.toLocaleString('es');
+      const bits=n===0n?1:n.toString(2).length;
+      document.getElementById('info-bits').textContent=bits;
+      document.getElementById('info-bytes').textContent=Math.ceil(bits/8);
+      document.getElementById('info-sign').textContent=n>=0n?'Positivo':'Negativo';
+    }
+    function clearAll(){['dec','bin','hex','oct'].forEach(id=>document.getElementById(id).value='');updateInfo(null);}
+    document.addEventListener('DOMContentLoaded',()=>{
+      const tbody=document.getElementById('ref-table');
+      for(let i=0;i<=15;i++){
+        const tr=document.createElement('tr');
+        tr.style.borderBottom='1px solid rgba(51,65,85,0.5)';
+        tr.innerHTML=`<td style="padding:0.4rem 0.5rem;color:var(--text)">${i}</td><td style="padding:0.4rem 0.5rem;color:var(--accent)">${i.toString(2).padStart(4,'0')}</td><td style="padding:0.4rem 0.5rem;color:#86efac">${i.toString(16).toUpperCase()}</td><td style="padding:0.4rem 0.5rem;color:var(--text2)">${i.toString(8)}</td>`;
+        tbody.appendChild(tr);
+      }
+    });
+  </script>
+</body>
+</html>

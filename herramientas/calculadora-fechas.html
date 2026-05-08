@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Fechas Online Gratis | HerramientasPro</title>
+  <meta name="description" content="Calcula días entre dos fechas, suma o resta días a una fecha, calcula tu edad y el día de la semana. Online gratis, sin registro.">
+  <meta name="keywords" content="calculadora fechas, dias entre fechas, calcular edad, sumar dias fecha, dia semana fecha">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles/main.css">
+</head>
+<body>
+  <header class="site-header" id="site-header"></header>
+  <main class="container">
+    <div class="tool-page">
+      <div class="tool-main">
+        <div class="ad-banner" id="ad-top"></div>
+        <nav class="breadcrumb"><a href="/">Inicio</a> › <span>Calculadora de Fechas</span></nav>
+        <div class="tool-header">
+          <h1>📅 Calculadora de Fechas</h1>
+          <p>Calcula la diferencia entre fechas, suma o resta días, y obtén información sobre cualquier fecha.</p>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:1.25rem">
+
+          <!-- Diff between dates -->
+          <div class="tool-box">
+            <div class="tool-box-header"><h2>Días entre dos fechas</h2></div>
+            <div class="tool-box-body">
+              <div class="form-row">
+                <div class="form-group"><label class="form-label">Fecha inicial</label><input type="date" id="d1" class="form-input" oninput="calcDiff()"></div>
+                <div class="form-group"><label class="form-label">Fecha final</label><input type="date" id="d2" class="form-input" oninput="calcDiff()"></div>
+              </div>
+              <div id="diff-result" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:0.75rem;margin-top:0.5rem"></div>
+            </div>
+          </div>
+
+          <!-- Add/subtract days -->
+          <div class="tool-box">
+            <div class="tool-box-header"><h2>Sumar / restar días a una fecha</h2></div>
+            <div class="tool-box-body">
+              <div class="form-row" style="align-items:flex-end">
+                <div class="form-group"><label class="form-label">Fecha base</label><input type="date" id="base-date" class="form-input" oninput="calcAdd()"></div>
+                <div class="form-group"><label class="form-label">Días</label><input type="number" id="add-days" class="form-input" placeholder="30" oninput="calcAdd()"></div>
+                <div class="form-group"><label class="form-label">Operación</label>
+                  <select id="add-op" class="form-input" onchange="calcAdd()">
+                    <option value="add">Sumar (+)</option>
+                    <option value="sub">Restar (−)</option>
+                  </select>
+                </div>
+              </div>
+              <div class="output-box" id="add-result" style="font-size:1.1rem;font-weight:700;min-height:52px;display:flex;align-items:center">
+                <button class="copy-btn" onclick="copyText(document.getElementById('add-result').querySelector('span')?.textContent||'')">Copiar</button>
+                <span>—</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Age calculator -->
+          <div class="tool-box">
+            <div class="tool-box-header"><h2>Calculadora de edad</h2></div>
+            <div class="tool-box-body">
+              <div class="form-row" style="align-items:flex-end">
+                <div class="form-group"><label class="form-label">Fecha de nacimiento</label><input type="date" id="birthdate" class="form-input" oninput="calcAge()"></div>
+                <div class="form-group"><label class="form-label">Calcular hasta</label><input type="date" id="ageref" class="form-input" oninput="calcAge()"></div>
+              </div>
+              <div id="age-result" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:0.75rem;margin-top:0.5rem"></div>
+            </div>
+          </div>
+
+          <!-- Day of week -->
+          <div class="tool-box">
+            <div class="tool-box-header"><h2>Día de la semana</h2></div>
+            <div class="tool-box-body">
+              <div class="form-row" style="align-items:flex-end">
+                <div class="form-group"><label class="form-label">Fecha</label><input type="date" id="dow-date" class="form-input" oninput="calcDOW()"></div>
+              </div>
+              <div class="output-box" id="dow-result" style="font-size:1.1rem;font-weight:700;min-height:52px;display:flex;align-items:center">
+                <button class="copy-btn" onclick="copyText(document.getElementById('dow-result').querySelector('span')?.textContent||'')">Copiar</button>
+                <span>—</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;justify-content:center;margin:1.5rem 0">
+          <div class="ad-rectangle" id="ad-mid"></div>
+        </div>
+
+        <div class="related-tools">
+          <h2 class="section-title" style="font-size:1rem">Herramientas relacionadas</h2>
+          <div class="tools-grid" style="grid-template-columns:repeat(auto-fill,minmax(180px,1fr))">
+            <a class="tool-card" href="conversor-tiempo.html"><span class="tool-icon">⏱️</span><h3>Tiempo</h3><p>Convierte horas, días, semanas.</p><span class="tool-link">Usar →</span></a>
+            <a class="tool-card" href="porcentajes.html"><span class="tool-icon">💯</span><h3>Porcentajes</h3><p>Calculos de porcentaje.</p><span class="tool-link">Usar →</span></a>
+            <a class="tool-card" href="conversor-unidades.html"><span class="tool-icon">📐</span><h3>Unidades</h3><p>Conversión de unidades.</p><span class="tool-link">Usar →</span></a>
+          </div>
+        </div>
+      </div>
+      <aside class="tool-sidebar"><div class="ad-sidebar" id="ad-sidebar"></div></aside>
+    </div>
+  </main>
+  <footer class="site-footer" id="site-footer"></footer>
+  <script src="../js/app.js"></script>
+  <script>
+    const DAYS_ES=['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+    const MONTHS_ES=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+
+    function chip(label,val){return`<div class="stat-chip"><strong>${val}</strong>${label}</div>`;}
+    function fmtDate(d){return`${d.getDate()} de ${MONTHS_ES[d.getMonth()]} de ${d.getFullYear()}`;}
+
+    function calcDiff(){
+      const a=document.getElementById('d1').value;
+      const b=document.getElementById('d2').value;
+      if(!a||!b)return;
+      const da=new Date(a),db=new Date(b);
+      const ms=Math.abs(db-da);
+      const days=Math.floor(ms/864e5);
+      const weeks=Math.floor(days/7);
+      const months=Math.abs((db.getFullYear()-da.getFullYear())*12+(db.getMonth()-da.getMonth()));
+      const years=Math.abs(db.getFullYear()-da.getFullYear());
+      document.getElementById('diff-result').innerHTML=
+        chip('días totales',days.toLocaleString('es'))+chip('semanas',weeks.toLocaleString('es'))+chip('meses aprox.',months)+chip('años aprox.',years)+(db>da?chip('sentido','→ futuro'):chip('sentido','← pasado'));
+    }
+
+    function calcAdd(){
+      const base=document.getElementById('base-date').value;
+      const days=parseInt(document.getElementById('add-days').value);
+      const op=document.getElementById('add-op').value;
+      if(!base||isNaN(days))return;
+      const d=new Date(base);
+      d.setDate(d.getDate()+(op==='add'?days:-days));
+      const result=`${DAYS_ES[d.getDay()]}, ${fmtDate(d)}`;
+      document.getElementById('add-result').querySelector('span').textContent=result;
+    }
+
+    function calcAge(){
+      const birth=document.getElementById('birthdate').value;
+      const ref=document.getElementById('ageref').value;
+      if(!birth||!ref)return;
+      const db=new Date(birth),dr=new Date(ref);
+      let years=dr.getFullYear()-db.getFullYear();
+      let months=dr.getMonth()-db.getMonth();
+      let days2=dr.getDate()-db.getDate();
+      if(days2<0){months--;const prev=new Date(dr.getFullYear(),dr.getMonth(),0);days2+=prev.getDate();}
+      if(months<0){years--;months+=12;}
+      const totalDays=Math.floor((dr-db)/864e5);
+      const totalWeeks=Math.floor(totalDays/7);
+      document.getElementById('age-result').innerHTML=
+        chip('años',years)+chip('meses',months)+chip('días',days2)+chip('días totales',totalDays.toLocaleString('es'))+chip('semanas totales',totalWeeks.toLocaleString('es'));
+    }
+
+    function calcDOW(){
+      const v=document.getElementById('dow-date').value;
+      if(!v)return;
+      const d=new Date(v);
+      document.getElementById('dow-result').querySelector('span').textContent=`${DAYS_ES[d.getDay()]} — ${fmtDate(d)} — semana ${getWeekNum(d)} del año`;
+    }
+
+    function getWeekNum(d){
+      const start=new Date(d.getFullYear(),0,1);
+      return Math.ceil(((d-start)/864e5+start.getDay()+1)/7);
+    }
+
+    document.addEventListener('DOMContentLoaded',()=>{
+      const today=new Date().toISOString().split('T')[0];
+      document.getElementById('d2').value=today;
+      document.getElementById('base-date').value=today;
+      document.getElementById('ageref').value=today;
+      document.getElementById('dow-date').value=today;
+      calcDOW();
+    });
+  </script>
+</body>
+</html>

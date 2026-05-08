@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generador de Contraseñas Online Gratis | HerramientasPro</title>
+  <meta name="description" content="Genera contraseñas seguras y aleatorias online. Configura longitud, mayúsculas, números y símbolos. Gratis y sin registro.">
+  <meta name="keywords" content="generador contraseñas, contraseñas seguras, password generator, crear contraseña segura">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles/main.css">
+</head>
+<body>
+  <header class="site-header" id="site-header"></header>
+
+  <main class="container">
+    <div class="tool-page">
+      <div class="tool-main">
+
+        <!-- Ad top -->
+        <div class="ad-banner" id="ad-top"></div>
+
+        <!-- Breadcrumb -->
+        <nav class="breadcrumb">
+          <a href="/">Inicio</a> › <span>Generador de Contraseñas</span>
+        </nav>
+
+        <!-- Tool header -->
+        <div class="tool-header">
+          <h1>🔐 Generador de Contraseñas</h1>
+          <p>Crea contraseñas seguras y aleatorias al instante. Configura la longitud y los tipos de caracteres que necesites.</p>
+        </div>
+
+        <!-- Tool box -->
+        <div class="tool-box">
+          <div class="tool-box-header">
+            <h2>Configuración</h2>
+          </div>
+          <div class="tool-box-body">
+
+            <!-- Length -->
+            <div class="form-group">
+              <label class="form-label">Longitud de la contraseña</label>
+              <div class="range-group">
+                <input type="range" id="length" min="6" max="64" value="16"
+                  oninput="document.getElementById('len-val').textContent=this.value; generate()">
+                <span class="range-val" id="len-val">16</span>
+              </div>
+            </div>
+
+            <!-- Character options -->
+            <div class="form-group">
+              <label class="form-label">Tipos de caracteres</label>
+              <div class="checkbox-group">
+                <label class="checkbox-item">
+                  <input type="checkbox" id="upper" checked onchange="generate()"> Mayúsculas (A-Z)
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" id="lower" checked onchange="generate()"> Minúsculas (a-z)
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" id="numbers" checked onchange="generate()"> Números (0-9)
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" id="symbols" onchange="generate()"> Símbolos (!@#$...)
+                </label>
+                <label class="checkbox-item">
+                  <input type="checkbox" id="noambig" checked onchange="generate()"> Sin ambiguos (0,O,l,1)
+                </label>
+              </div>
+            </div>
+
+            <!-- Output -->
+            <div class="form-group">
+              <label class="form-label">Contraseña generada</label>
+              <div class="output-box" id="password-output" style="font-size:1.1rem;letter-spacing:0.05em;min-height:56px;display:flex;align-items:center;">
+                <button class="copy-btn" id="copy-btn" onclick="copyPassword()">Copiar</button>
+                <span id="pw-text">Cargando...</span>
+              </div>
+            </div>
+
+            <!-- Strength indicator -->
+            <div class="form-group">
+              <label class="form-label">Fortaleza</label>
+              <div id="strength-bar" style="height:6px;border-radius:3px;background:var(--border);overflow:hidden;margin-bottom:0.4rem">
+                <div id="strength-fill" style="height:100%;width:0;border-radius:3px;transition:width 0.3s,background 0.3s;"></div>
+              </div>
+              <span id="strength-label" style="font-size:0.8rem;color:var(--text3)"></span>
+            </div>
+
+            <div class="btn-group">
+              <button class="btn btn-primary" onclick="generate()">⟳ Regenerar</button>
+              <button class="btn btn-secondary" onclick="generateMultiple()">Generar 5</button>
+              <button class="btn btn-secondary" onclick="copyPassword()">📋 Copiar</button>
+            </div>
+
+            <!-- Batch output -->
+            <div id="batch-out" style="display:none;margin-top:1.25rem">
+              <label class="form-label">Lote generado</label>
+              <div class="output-box" id="batch-text" style="white-space:pre-line;min-height:120px;"></div>
+              <button class="btn btn-secondary" style="margin-top:0.5rem" onclick="copyBatch()">📋 Copiar todas</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ad mid -->
+        <div style="display:flex;justify-content:center;margin:1.5rem 0">
+          <div class="ad-rectangle" id="ad-mid"></div>
+        </div>
+
+        <!-- Tips SEO content -->
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-top:1rem">
+          <h2 style="font-size:1rem;font-weight:700;margin-bottom:0.75rem">¿Cómo crear una contraseña segura?</h2>
+          <ul style="color:var(--text2);font-size:0.875rem;display:flex;flex-direction:column;gap:0.5rem;padding-left:1.25rem">
+            <li>Usa al menos <strong>16 caracteres</strong> de longitud.</li>
+            <li>Mezcla <strong>mayúsculas, minúsculas, números y símbolos</strong>.</li>
+            <li>Evita palabras del diccionario, nombres o fechas.</li>
+            <li>Usa <strong>contraseñas únicas</strong> para cada cuenta.</li>
+            <li>Guárdalas en un gestor de contraseñas confiable.</li>
+          </ul>
+        </div>
+
+        <!-- Related tools -->
+        <div class="related-tools">
+          <h2 class="section-title" style="font-size:1rem">Herramientas relacionadas</h2>
+          <div class="tools-grid" style="grid-template-columns:repeat(auto-fill,minmax(180px,1fr))">
+            <a class="tool-card" href="uuid.html">
+              <span class="tool-icon">🎲</span>
+              <h3>Generador UUID</h3>
+              <p>IDs únicos para tus proyectos.</p>
+              <span class="tool-link">Usar →</span>
+            </a>
+            <a class="tool-card" href="base64.html">
+              <span class="tool-icon">🔄</span>
+              <h3>Base64</h3>
+              <p>Codifica texto en Base64.</p>
+              <span class="tool-link">Usar →</span>
+            </a>
+            <a class="tool-card" href="url-encoder.html">
+              <span class="tool-icon">🔗</span>
+              <h3>Encoder URL</h3>
+              <p>Codifica cadenas para URLs.</p>
+              <span class="tool-link">Usar →</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <aside class="tool-sidebar">
+        <div class="ad-sidebar" id="ad-sidebar"></div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="site-footer" id="site-footer"></footer>
+  <script src="../js/app.js"></script>
+  <script>
+    const UPPER = 'ABCDEFGHJKLMNPQRSTUVWXYZ';
+    const UPPER_AMBIG = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const LOWER = 'abcdefghjkmnpqrstuvwxyz';
+    const LOWER_AMBIG = 'abcdefghijklmnopqrstuvwxyz';
+    const NUMBERS = '23456789';
+    const NUMBERS_AMBIG = '0123456789';
+    const SYMBOLS = '!@#$%^&*()_+-=[]{}|;:,.<>?';
+
+    function getCharset() {
+      const noAmbig = document.getElementById('noambig').checked;
+      let cs = '';
+      if (document.getElementById('upper').checked) cs += noAmbig ? UPPER : UPPER_AMBIG;
+      if (document.getElementById('lower').checked) cs += noAmbig ? LOWER : LOWER_AMBIG;
+      if (document.getElementById('numbers').checked) cs += noAmbig ? NUMBERS : NUMBERS_AMBIG;
+      if (document.getElementById('symbols').checked) cs += SYMBOLS;
+      return cs;
+    }
+
+    function generatePassword() {
+      const len = parseInt(document.getElementById('length').value);
+      const cs = getCharset();
+      if (!cs) return '(selecciona al menos un tipo de carácter)';
+      const arr = new Uint32Array(len);
+      crypto.getRandomValues(arr);
+      return Array.from(arr).map(n => cs[n % cs.length]).join('');
+    }
+
+    function getStrength(pw) {
+      let score = 0;
+      if (pw.length >= 12) score++;
+      if (pw.length >= 16) score++;
+      if (/[A-Z]/.test(pw)) score++;
+      if (/[a-z]/.test(pw)) score++;
+      if (/[0-9]/.test(pw)) score++;
+      if (/[^A-Za-z0-9]/.test(pw)) score++;
+      if (score <= 2) return { label: 'Débil', pct: 25, color: 'var(--error)' };
+      if (score <= 3) return { label: 'Media', pct: 50, color: 'var(--warn)' };
+      if (score <= 4) return { label: 'Buena', pct: 75, color: '#60a5fa' };
+      return { label: 'Muy fuerte', pct: 100, color: 'var(--success)' };
+    }
+
+    function generate() {
+      document.getElementById('batch-out').style.display = 'none';
+      const pw = generatePassword();
+      document.getElementById('pw-text').textContent = pw;
+      const s = getStrength(pw);
+      document.getElementById('strength-fill').style.width = s.pct + '%';
+      document.getElementById('strength-fill').style.background = s.color;
+      document.getElementById('strength-label').textContent = s.label;
+      document.getElementById('strength-label').style.color = s.color;
+    }
+
+    function generateMultiple() {
+      const pws = Array.from({ length: 5 }, () => generatePassword()).join('\n');
+      const batch = document.getElementById('batch-out');
+      batch.style.display = 'block';
+      document.getElementById('batch-text').textContent = pws;
+    }
+
+    function copyPassword() {
+      const pw = document.getElementById('pw-text').textContent;
+      copyText(pw, document.getElementById('copy-btn'));
+    }
+
+    function copyBatch() {
+      copyText(document.getElementById('batch-text').textContent);
+    }
+
+    document.addEventListener('DOMContentLoaded', generate);
+  </script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Encoder y Decoder URL Online Gratis | HerramientasPro</title>
+  <meta name="description" content="Codifica y decodifica URLs y cadenas de consulta online gratis. Convierte caracteres especiales a formato URL. Sin registro.">
+  <meta name="keywords" content="url encoder, url decoder, codificar url, decodificar url, url encode online, urlencode">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles/main.css">
+</head>
+<body>
+  <header class="site-header" id="site-header"></header>
+  <main class="container">
+    <div class="tool-page">
+      <div class="tool-main">
+        <div class="ad-banner" id="ad-top"></div>
+        <nav class="breadcrumb"><a href="/">Inicio</a> › <span>Encoder / Decoder URL</span></nav>
+        <div class="tool-header">
+          <h1>🔗 Encoder / Decoder URL</h1>
+          <p>Codifica caracteres especiales en URLs o decodifica cadenas URL-encoded. Soporta encodeURIComponent y encodeURI completo.</p>
+        </div>
+
+        <div style="display:flex;gap:0.5rem;margin-bottom:1.5rem">
+          <button class="btn btn-primary" id="tab-enc" onclick="setMode('encode')">Codificar URL</button>
+          <button class="btn btn-secondary" id="tab-dec" onclick="setMode('decode')">Decodificar URL</button>
+        </div>
+
+        <div class="tool-box">
+          <div class="tool-box-header"><h2 id="box-title">Texto → URL encoded</h2></div>
+          <div class="tool-box-body">
+            <div class="form-group">
+              <label class="form-label" id="in-label">Texto de entrada</label>
+              <textarea id="url-input" class="form-textarea" placeholder="Escribe o pega la cadena aquí..." oninput="process()"></textarea>
+            </div>
+            <div class="checkbox-group" style="margin-bottom:1rem">
+              <label class="checkbox-item"><input type="checkbox" id="comp" checked onchange="process()"> encodeURIComponent (codifica más caracteres)</label>
+              <label class="checkbox-item"><input type="checkbox" id="plus" onchange="process()"> Usar + para espacios en lugar de %20</label>
+            </div>
+            <div class="form-group">
+              <label class="form-label" id="out-label">Resultado</label>
+              <div class="output-box" style="min-height:100px;word-break:break-all">
+                <button class="copy-btn" id="copy-btn" onclick="copyResult()">Copiar</button>
+                <span id="url-output">El resultado aparecerá aquí...</span>
+              </div>
+            </div>
+            <div id="url-error" style="color:var(--error);font-size:0.85rem;margin-top:0.5rem;display:none"></div>
+            <div class="btn-group">
+              <button class="btn btn-primary" onclick="process()">Procesar</button>
+              <button class="btn btn-secondary" onclick="swapIO()">⇅ Intercambiar</button>
+              <button class="btn btn-secondary" onclick="clearAll()">Limpiar</button>
+            </div>
+            <div class="stats-row" style="margin-top:1rem">
+              <div class="stat-chip"><strong id="in-len">0</strong>chars entrada</div>
+              <div class="stat-chip"><strong id="out-len">0</strong>chars salida</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Reference table -->
+        <div class="tool-box" style="margin-top:1.25rem">
+          <div class="tool-box-header"><h2>Caracteres comunes y su codificación</h2></div>
+          <div class="tool-box-body">
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:0.5rem">
+              ${[['Espacio','%20'],['!','%21'],['#','%23'],['$','%24'],['&','%26'],["'",'%27'],['(','%28'],[')',')%29'],['*','%2A'],['+','%2B'],[',','%2C'],['/','%2F'],[':','%3A'],[';','%3B'],['=','%3D'],['?','%3F'],['@','%40'],['[','%5B'],[']','%5D']].map(([c,e])=>`<div style="background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:0.4rem 0.6rem;font-size:0.8rem"><span style="color:var(--accent);font-weight:700">${c}</span> → <code style="color:var(--text2)">${e}</code></div>`).join('')}
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;justify-content:center;margin:1.5rem 0">
+          <div class="ad-rectangle" id="ad-mid"></div>
+        </div>
+
+        <div class="related-tools">
+          <h2 class="section-title" style="font-size:1rem">Herramientas relacionadas</h2>
+          <div class="tools-grid" style="grid-template-columns:repeat(auto-fill,minmax(180px,1fr))">
+            <a class="tool-card" href="base64.html"><span class="tool-icon">🔄</span><h3>Base64</h3><p>Codifica en Base64.</p><span class="tool-link">Usar →</span></a>
+            <a class="tool-card" href="generador-qr.html"><span class="tool-icon">📱</span><h3>Generador QR</h3><p>QR de cualquier URL.</p><span class="tool-link">Usar →</span></a>
+            <a class="tool-card" href="json-formateador.html"><span class="tool-icon">📋</span><h3>JSON</h3><p>Valida y formatea JSON.</p><span class="tool-link">Usar →</span></a>
+          </div>
+        </div>
+      </div>
+      <aside class="tool-sidebar"><div class="ad-sidebar" id="ad-sidebar"></div></aside>
+    </div>
+  </main>
+  <footer class="site-footer" id="site-footer"></footer>
+  <script src="../js/app.js"></script>
+  <script>
+    let mode='encode';
+    function setMode(m){
+      mode=m;
+      const enc=m==='encode';
+      document.getElementById('tab-enc').className=enc?'btn btn-primary':'btn btn-secondary';
+      document.getElementById('tab-dec').className=enc?'btn btn-secondary':'btn btn-primary';
+      document.getElementById('box-title').textContent=enc?'Texto → URL encoded':'URL encoded → Texto';
+      document.getElementById('in-label').textContent=enc?'Texto de entrada':'Cadena URL encoded';
+      document.getElementById('out-label').textContent=enc?'Resultado URL encoded':'Texto decodificado';
+      document.getElementById('url-input').placeholder=enc?'Escribe o pega la cadena aquí...':'Pega la URL o cadena encoded aquí...';
+      process();
+    }
+    function process(){
+      const raw=document.getElementById('url-input').value;
+      const comp=document.getElementById('comp').checked;
+      const plus=document.getElementById('plus').checked;
+      const errEl=document.getElementById('url-error');
+      errEl.style.display='none';
+      document.getElementById('in-len').textContent=raw.length.toLocaleString('es');
+      if(!raw){document.getElementById('url-output').textContent='El resultado aparecerá aquí...';document.getElementById('out-len').textContent='0';return;}
+      try{
+        let result;
+        if(mode==='encode'){
+          result=comp?encodeURIComponent(raw):encodeURI(raw);
+          if(plus)result=result.replace(/%20/g,'+');
+        } else {
+          let dec=raw;
+          if(plus)dec=dec.replace(/\+/g,' ');
+          result=comp?decodeURIComponent(dec):decodeURI(dec);
+        }
+        document.getElementById('url-output').textContent=result;
+        document.getElementById('out-len').textContent=result.length.toLocaleString('es');
+      } catch(e){
+        errEl.textContent='⚠ '+e.message;
+        errEl.style.display='block';
+      }
+    }
+    function swapIO(){
+      const out=document.getElementById('url-output').textContent;
+      if(out&&out!=='El resultado aparecerá aquí...'){
+        document.getElementById('url-input').value=out;
+        setMode(mode==='encode'?'decode':'encode');
+      }
+    }
+    function clearAll(){document.getElementById('url-input').value='';process();}
+    function copyResult(){copyText(document.getElementById('url-output').textContent,document.getElementById('copy-btn'));}
+  </script>
+</body>
+</html>

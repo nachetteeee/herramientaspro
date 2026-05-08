@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Conversor Mayúsculas Minúsculas Online Gratis | HerramientasPro</title>
+  <meta name="description" content="Convierte texto entre mayúsculas, minúsculas, formato título, camelCase, snake_case y más online gratis. Sin registro.">
+  <meta name="keywords" content="mayusculas minusculas, convertir mayusculas, camelcase, snake case, title case, cambiar caso texto">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles/main.css">
+</head>
+<body>
+  <header class="site-header" id="site-header"></header>
+  <main class="container">
+    <div class="tool-page">
+      <div class="tool-main">
+        <div class="ad-banner" id="ad-top"></div>
+        <nav class="breadcrumb"><a href="/">Inicio</a> › <span>Mayúsculas y Minúsculas</span></nav>
+        <div class="tool-header">
+          <h1>🔤 Mayúsculas, Minúsculas y Formatos</h1>
+          <p>Convierte texto entre cualquier formato al instante: MAYÚSCULAS, minúsculas, Título, camelCase, snake_case, kebab-case y más.</p>
+        </div>
+
+        <div class="tool-box">
+          <div class="tool-box-header"><h2>Texto de entrada</h2>
+            <button class="btn btn-secondary" style="font-size:0.75rem;padding:0.3rem 0.6rem" onclick="clearText()">Limpiar</button>
+          </div>
+          <div class="tool-box-body" style="padding:0">
+            <textarea id="text-input" class="form-textarea" style="border:none;border-radius:0;min-height:160px;font-size:0.95rem;resize:vertical"
+              placeholder="Escribe o pega tu texto aquí..." oninput="convertAll()"></textarea>
+          </div>
+        </div>
+
+        <!-- Conversion buttons + outputs -->
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;margin-top:1.25rem" id="outputs-grid"></div>
+
+        <div style="display:flex;justify-content:center;margin:1.5rem 0">
+          <div class="ad-rectangle" id="ad-mid"></div>
+        </div>
+
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem">
+          <h2 style="font-size:1rem;font-weight:700;margin-bottom:0.75rem">Referencia de formatos</h2>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;font-size:0.875rem;color:var(--text2)">
+            <div><code style="color:var(--accent)">camelCase</code> — variables JS</div>
+            <div><code style="color:var(--accent)">PascalCase</code> — clases y componentes</div>
+            <div><code style="color:var(--accent)">snake_case</code> — variables Python/DB</div>
+            <div><code style="color:var(--accent)">kebab-case</code> — URLs y CSS</div>
+            <div><code style="color:var(--accent)">SCREAMING_SNAKE</code> — constantes</div>
+            <div><code style="color:var(--accent)">dot.case</code> — configuraciones</div>
+          </div>
+        </div>
+
+        <div class="related-tools">
+          <h2 class="section-title" style="font-size:1rem">Herramientas relacionadas</h2>
+          <div class="tools-grid" style="grid-template-columns:repeat(auto-fill,minmax(180px,1fr))">
+            <a class="tool-card" href="contador-palabras.html"><span class="tool-icon">🔢</span><h3>Contador</h3><p>Cuenta palabras y más.</p><span class="tool-link">Usar →</span></a>
+            <a class="tool-card" href="diff-texto.html"><span class="tool-icon">🔍</span><h3>Diferenciador</h3><p>Compara textos.</p><span class="tool-link">Usar →</span></a>
+            <a class="tool-card" href="lorem-ipsum.html"><span class="tool-icon">📝</span><h3>Lorem Ipsum</h3><p>Texto de relleno.</p><span class="tool-link">Usar →</span></a>
+          </div>
+        </div>
+      </div>
+      <aside class="tool-sidebar"><div class="ad-sidebar" id="ad-sidebar"></div></aside>
+    </div>
+  </main>
+  <footer class="site-footer" id="site-footer"></footer>
+  <script src="../js/app.js"></script>
+  <script>
+    const CONVERSIONS = [
+      { id:'upper', label:'MAYÚSCULAS', icon:'⬆', fn: t => t.toUpperCase() },
+      { id:'lower', label:'minúsculas', icon:'⬇', fn: t => t.toLowerCase() },
+      { id:'title', label:'Formato Título', icon:'📰', fn: t => t.toLowerCase().replace(/(^|\s)\S/g, c => c.toUpperCase()) },
+      { id:'sentence', label:'Formato oración', icon:'📝', fn: t => t.toLowerCase().replace(/(^\s*\w|[.!?]\s*\w)/g, c => c.toUpperCase()) },
+      { id:'camel', label:'camelCase', icon:'🐪', fn: t => t.trim().toLowerCase().replace(/[^a-z0-9]+(.)/gi, (_,c) => c.toUpperCase()).replace(/^./, c => c.toLowerCase()) },
+      { id:'pascal', label:'PascalCase', icon:'🏛', fn: t => t.trim().toLowerCase().replace(/[^a-z0-9]+(.)/gi, (_,c) => c.toUpperCase()).replace(/^./, c => c.toUpperCase()) },
+      { id:'snake', label:'snake_case', icon:'🐍', fn: t => t.trim().toLowerCase().replace(/[\s\-\.]+/g,'_').replace(/[^a-z0-9_]/g,'') },
+      { id:'kebab', label:'kebab-case', icon:'🍢', fn: t => t.trim().toLowerCase().replace(/[\s\_\.]+/g,'-').replace(/[^a-z0-9\-]/g,'') },
+      { id:'screaming', label:'SCREAMING_SNAKE', icon:'📢', fn: t => t.trim().toUpperCase().replace(/[\s\-\.]+/g,'_').replace(/[^A-Z0-9_]/g,'') },
+      { id:'dot', label:'dot.case', icon:'•', fn: t => t.trim().toLowerCase().replace(/[\s\_\-]+/g,'.').replace(/[^a-z0-9\.]/g,'') },
+      { id:'alternate', label:'aLtErNaDo', icon:'〜', fn: t => [...t].map((c,i)=>i%2===0?c.toLowerCase():c.toUpperCase()).join('') },
+      { id:'reverse', label:'otseroP', icon:'↩', fn: t => [...t].reverse().join('') },
+    ];
+
+    function buildGrid(){
+      document.getElementById('outputs-grid').innerHTML = CONVERSIONS.map(c => `
+        <div class="tool-box">
+          <div class="tool-box-header" style="padding:0.6rem 0.9rem">
+            <h2 style="font-size:0.8rem">${c.icon} ${c.label}</h2>
+            <button class="copy-btn" style="position:static;font-size:0.7rem" id="copy-${c.id}" onclick="copyText(document.getElementById('out-${c.id}').textContent, document.getElementById('copy-${c.id}'))">Copiar</button>
+          </div>
+          <div class="tool-box-body" style="padding:0.75rem">
+            <div id="out-${c.id}" style="font-size:0.9rem;color:var(--text2);word-break:break-all;min-height:36px;cursor:pointer" onclick="copyText(this.textContent)" title="Clic para copiar">—</div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function convertAll(){
+      const text = document.getElementById('text-input').value;
+      CONVERSIONS.forEach(c => {
+        const el = document.getElementById('out-'+c.id);
+        if(el) el.textContent = text ? c.fn(text) : '—';
+      });
+    }
+
+    function clearText(){
+      document.getElementById('text-input').value='';
+      convertAll();
+    }
+
+    document.addEventListener('DOMContentLoaded',()=>{buildGrid();});
+  </script>
+</body>
+</html>

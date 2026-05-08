@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generador Lorem Ipsum Online Gratis | HerramientasPro</title>
+  <meta name="description" content="Genera texto Lorem Ipsum de relleno online gratis. Elige párrafos, palabras o frases. También genera texto en español. Sin registro.">
+  <meta name="keywords" content="generador lorem ipsum, texto de relleno, lorem ipsum online, placeholder text, texto aleatorio diseño">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles/main.css">
+</head>
+<body>
+  <header class="site-header" id="site-header"></header>
+  <main class="container">
+    <div class="tool-page">
+      <div class="tool-main">
+        <div class="ad-banner" id="ad-top"></div>
+        <nav class="breadcrumb"><a href="/">Inicio</a> › <span>Generador Lorem Ipsum</span></nav>
+        <div class="tool-header">
+          <h1>📝 Generador de Lorem Ipsum</h1>
+          <p>Genera texto de relleno clásico o en español para tus diseños y prototipos. Configura cantidad y formato.</p>
+        </div>
+
+        <div class="tool-box">
+          <div class="tool-box-header"><h2>Configuración</h2></div>
+          <div class="tool-box-body">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Tipo</label>
+                <select id="unit" class="form-input" onchange="generate()">
+                  <option value="paragraphs">Párrafos</option>
+                  <option value="sentences">Frases</option>
+                  <option value="words">Palabras</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Cantidad</label>
+                <input type="number" id="amount" class="form-input" value="3" min="1" max="50" oninput="generate()">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Idioma</label>
+                <select id="lang" class="form-input" onchange="generate()">
+                  <option value="latin">Lorem Ipsum (latín)</option>
+                  <option value="spanish">Español</option>
+                </select>
+              </div>
+            </div>
+            <div class="checkbox-group">
+              <label class="checkbox-item"><input type="checkbox" id="html-wrap" onchange="generate()"> Envolver en &lt;p&gt; tags</label>
+              <label class="checkbox-item"><input type="checkbox" id="start-lorem" checked onchange="generate()"> Empezar con "Lorem ipsum..."</label>
+            </div>
+            <div class="btn-group" style="margin-top:1rem">
+              <button class="btn btn-primary" onclick="generate()">⟳ Regenerar</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="tool-box" style="margin-top:1.25rem">
+          <div class="tool-box-header">
+            <h2>Texto generado</h2>
+            <div style="display:flex;gap:0.4rem">
+              <button class="copy-btn" style="position:static" onclick="copyOutput()">Copiar</button>
+              <button class="copy-btn" style="position:static" onclick="downloadOutput()">⬇</button>
+            </div>
+          </div>
+          <div class="tool-box-body">
+            <div id="lorem-output" style="color:var(--text2);font-size:0.9rem;line-height:1.8;white-space:pre-wrap"></div>
+          </div>
+        </div>
+
+        <div class="stats-row" style="margin-top:1rem">
+          <div class="stat-chip"><strong id="s-words">0</strong>Palabras</div>
+          <div class="stat-chip"><strong id="s-chars">0</strong>Caracteres</div>
+          <div class="stat-chip"><strong id="s-paras">0</strong>Párrafos</div>
+        </div>
+
+        <div style="display:flex;justify-content:center;margin:1.5rem 0">
+          <div class="ad-rectangle" id="ad-mid"></div>
+        </div>
+
+        <div class="related-tools">
+          <h2 class="section-title" style="font-size:1rem">Herramientas relacionadas</h2>
+          <div class="tools-grid" style="grid-template-columns:repeat(auto-fill,minmax(180px,1fr))">
+            <a class="tool-card" href="contador-palabras.html"><span class="tool-icon">🔢</span><h3>Contador Palabras</h3><p>Cuenta y analiza texto.</p><span class="tool-link">Usar →</span></a>
+            <a class="tool-card" href="texto-aleatorio.html"><span class="tool-icon">🎰</span><h3>Texto Aleatorio</h3><p>Texto aleatorio en español.</p><span class="tool-link">Usar →</span></a>
+            <a class="tool-card" href="cambiar-caso.html"><span class="tool-icon">🔤</span><h3>Cambiar Caso</h3><p>Mayúsculas y minúsculas.</p><span class="tool-link">Usar →</span></a>
+          </div>
+        </div>
+      </div>
+      <aside class="tool-sidebar"><div class="ad-sidebar" id="ad-sidebar"></div></aside>
+    </div>
+  </main>
+  <footer class="site-footer" id="site-footer"></footer>
+  <script src="../js/app.js"></script>
+  <script>
+    const LOREM_WORDS=['lorem','ipsum','dolor','sit','amet','consectetur','adipiscing','elit','sed','do','eiusmod','tempor','incididunt','ut','labore','et','dolore','magna','aliqua','enim','ad','minim','veniam','quis','nostrud','exercitation','ullamco','laboris','nisi','aliquip','ex','ea','commodo','consequat','duis','aute','irure','in','reprehenderit','voluptate','velit','esse','cillum','eu','fugiat','nulla','pariatur','excepteur','sint','occaecat','cupidatat','non','proident','sunt','culpa','qui','officia','deserunt','mollit','anim','est','laborum','curabitur','pretium','tincidunt','lacus','nunc','pulvinar','sapien','ligula','eget','condimentum','aliquam','erat','volutpat','nam','dui','erat','viverra','gravida'];
+    const ES_WORDS=['el','tiempo','libre','cambia','todo','lo','que','conocemos','mientras','avanza','sin','detenerse','jamás','la','vida','transcurre','entre','momentos','únicos','que','debemos','aprovechar','al','máximo','cada','día','es','una','oportunidad','nueva','para','crecer','aprender','y','mejorar','nuestras','habilidades','el','conocimiento','nos','libera','y','nos','permite','alcanzar','metas','que','antes','parecían','imposibles','con','esfuerzo','dedicación','y','perseverancia','cualquier','objetivo','se','puede','lograr','si','mantenemos','el','enfoque','correcto','las','ideas','brillantes','surgen','en','los','momentos','más','inesperados','por','eso','siempre','debemos','estar','preparados','para','capturarlas','y','transformarlas','en','realidad','el','trabajo','en','equipo','multiplica','los','resultados','y','nos','ayuda','a','superar','obstáculos'];
+
+    function rnd(arr){return arr[Math.floor(Math.random()*arr.length)];}
+    function sentence(words,lang){
+      const len=5+Math.floor(Math.random()*12);
+      const ws=Array.from({length:len},()=>rnd(words));
+      return ws[0].charAt(0).toUpperCase()+ws[0].slice(1)+' '+ws.slice(1).join(' ')+'.';
+    }
+    function paragraph(words,lang,idx,startLorem){
+      const sentCount=3+Math.floor(Math.random()*4);
+      const sents=Array.from({length:sentCount},(_,i)=>{
+        if(idx===0&&i===0&&startLorem&&lang==='latin')
+          return'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
+        return sentence(words,lang);
+      });
+      return sents.join(' ');
+    }
+
+    function generate(){
+      const unit=document.getElementById('unit').value;
+      const amount=Math.min(Math.max(parseInt(document.getElementById('amount').value)||3,1),50);
+      const lang=document.getElementById('lang').value;
+      const htmlWrap=document.getElementById('html-wrap').checked;
+      const startLorem=document.getElementById('start-lorem').checked;
+      const words=lang==='latin'?LOREM_WORDS:ES_WORDS;
+      let result,parts;
+
+      if(unit==='words'){
+        const ws=Array.from({length:amount},(_,i)=>{
+          if(i===0&&startLorem&&lang==='latin')return'Lorem';
+          return rnd(words);
+        });
+        result=[ws.join(' ')];
+      } else if(unit==='sentences'){
+        parts=Array.from({length:amount},(_,i)=>sentence(words,lang));
+        if(startLorem&&lang==='latin')parts[0]='Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
+        result=[parts.join(' ')];
+      } else {
+        parts=Array.from({length:amount},(_,i)=>paragraph(words,lang,i,startLorem));
+        result=parts;
+      }
+
+      const output=htmlWrap?result.map(p=>`<p>${p}</p>`).join('\n'):result.join('\n\n');
+      document.getElementById('lorem-output').textContent=output;
+
+      const plainText=output.replace(/<[^>]+>/g,'');
+      document.getElementById('s-words').textContent=plainText.trim().split(/\s+/).length.toLocaleString('es');
+      document.getElementById('s-chars').textContent=plainText.length.toLocaleString('es');
+      document.getElementById('s-paras').textContent=(unit==='paragraphs'?amount:1).toLocaleString('es');
+    }
+    function copyOutput(){copyText(document.getElementById('lorem-output').textContent);}
+    function downloadOutput(){
+      const a=document.createElement('a');
+      a.download='lorem-ipsum.txt';
+      a.href='data:text/plain;charset=utf-8,'+encodeURIComponent(document.getElementById('lorem-output').textContent);
+      a.click();
+    }
+    document.addEventListener('DOMContentLoaded',generate);
+  </script>
+</body>
+</html>

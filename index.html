@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HerramientasPro — Herramientas Online Gratuitas para Desarrolladores</title>
+  <meta name="description" content="Más de 20 herramientas online gratuitas para desarrolladores y uso general. Generador de contraseñas, Base64, JSON, QR, conversor de unidades y más.">
+  <meta name="keywords" content="herramientas online, herramientas gratuitas, generador contraseñas, base64, json, conversor unidades, generador qr">
+  <meta property="og:title" content="HerramientasPro — Herramientas Online Gratuitas">
+  <meta property="og:description" content="Más de 20 herramientas online gratuitas para desarrolladores y uso general.">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/main.css">
+  <!-- Google AdSense (activar después de aprobación)
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+  -->
+  <style>
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: var(--accent-glow);
+      color: var(--accent);
+      border: 1px solid rgba(99,102,241,0.3);
+      border-radius: 50px;
+      padding: 0.3rem 0.9rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 1.25rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header (renderizado por JS) -->
+  <header class="site-header" id="site-header"></header>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero container">
+      <div class="hero-badge">⚡ 20+ herramientas gratuitas</div>
+      <h1>Herramientas Online<br><em>Rápidas y Gratuitas</em></h1>
+      <p>Todo lo que necesitas como desarrollador o usuario: generadores, conversores, validadores y más. Sin registro, sin límites.</p>
+      <div class="hero-search" style="position:relative">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+        <input type="text" id="hero-search-input" placeholder="Busca una herramienta..." autocomplete="off">
+        <div id="hero-search-results" style="left:0;right:0;"></div>
+      </div>
+    </section>
+
+    <div class="container">
+      <!-- Ad banner top -->
+      <div class="ad-banner" id="ad-top"></div>
+
+      <!-- Categorías -->
+      <section class="section">
+        <h2 class="section-title">Categorías</h2>
+        <div class="categories-grid">
+          <a class="category-card" href="#dev-tools">
+            <span class="cat-icon">🛠️</span>
+            <h3>Dev Tools</h3>
+            <p>Herramientas esenciales para desarrolladores: Base64, JSON, UUID, colores, minificador y más.</p>
+            <span class="cat-count">10 herramientas →</span>
+          </a>
+          <a class="category-card" href="#general-tools">
+            <span class="cat-icon">⚙️</span>
+            <h3>Herramientas Generales</h3>
+            <p>Conversores, calculadoras y utilidades para el día a día: unidades, QR, fechas, bytes y más.</p>
+            <span class="cat-count">10 herramientas →</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- Dev Tools -->
+      <section class="section" id="dev-tools">
+        <h2 class="section-title">🛠️ Dev Tools</h2>
+        <div class="tools-grid">
+          <a class="tool-card" href="herramientas/generador-contrasenas.html">
+            <span class="tool-icon">🔐</span>
+            <span class="badge">Popular</span>
+            <h3>Generador de Contraseñas</h3>
+            <p>Contraseñas seguras y aleatorias. Longitud y caracteres configurables.</p>
+            <span class="tool-link">Usar →</span>
+          </a>
+          <a class="tool-card" href="herramientas/base64.html">
+            <span class="tool-icon">🔄</span>
+            <h3>Encoder / Decoder Base64</h3>
+            <p>Codifica y decodifica texto en Base64 al instante.</p>
+            <span class="tool-link">Usar →</span>
+          </a>
+          <a class="tool-card" href="herramientas/json-formateador.html">
+            <span class="tool-icon">📋</span>
+            <span class="badge">Popular</span>
+            <h3>Validador JSON</h3>
+            <p>Valida y formatea JSON con resaltado de errores.</p>
+            <span class="tool-link">Usar →</span>
+          </a>
+          <a class="tool-card" href="herramientas/uuid.html">
+            <span class="tool-icon">🎲</span>
+            <h3>Generador de UUID</h3>
+            <p>Genera UUIDs v4 únicos al instante, uno o en lote.</p>
+            <span class="tool-link">Usar →</span>
+          </a>
+          <a class="tool-card" href="herramientas/color-conversor.html">
+            <span class="tool-icon">🎨</span>
+            <h3>Conversor HEX / RGB / HSL</h3>
+            <p>Convierte entre formatos de color con previsualización.</p>
+            <span class="tool-link">Usar →</span>
+          </a>
+          <a class="tool-card" href="herramientas/url-encoder.html">
+            <span class="tool-icon">🔗</span>
+            <h3>Encoder / Decoder URL</h3>
+            <p>Codifica y decodifica URLs y cadenas de consulta.</p>
+            <span class="tool-link">Usar →</span>
+          </a>
+          <a class="tool-card" href="herramientas/conversor-numerico.html">
+            <span class="tool-icon">💻</span>
+            <h3>Conversor Numérico</h3>
+            <p>Binario, decimal, hexadecimal y octal en tiempo real.</p>
+            <span class="tool-link">Usar →</span>
+          </a>
+          <a class="tool-card" href="herramientas/lorem-ipsum.html">
+            <span class="tool-icon">📝</span>
+            <h3>Generador Lorem Ipsum</h3>
+            <p>Texto de relleno configurable para tus diseños.</p>
+            <span class="tool-link">Usar →</span>
+          </a>
+          <a class="tool-card" href="herramientas/minificador.html">
+            <span class="tool-icon">⚡</span>
+            <h3>Minificador CSS / JS</h3>
+            <p>Minifica código CSS y JavaScript para producción.</p>
+            <span class="tool-link">Usar →</span>
+          </a>
+          <a class="tool-card" href="herramientas/diff-texto.html">
+            <span class="tool-icon">🔍</span>
+            <h3>Diferenciador de Texto</h3>
+            <p>Compara dos textos y resalta las diferencias línea a línea.</p>
+            <span class="tool-link">Usar →</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- General Tools -->
+      <section class="section" id="general-tools">
+        <h2 class="section-title">⚙️ Herramientas Generales</h2>
+        <div class="tools-grid">
+          <a class="tool-card" href="herramientas/conversor-unidades.html">
+            <span class="tool-icon">📐</span>
+            <h3>Conversor de Unidades</h3>
+            <p>Longitud, peso, temperatura, área y más.</p>
+            <span class="tool-link">Usar →</span>
+          </a>
+          <a class="tool-card" href="herramientas/porcentajes.html">
+            <span class="tool-icon">💯</span>
+            <h3>Calculadora de Porcentajes</h3>
+            <p>Calcula porcentajes, aumentos y descuentos al instante.</p>
+            <span class="tool-link">Usar →</span>
+          </a>
+          <a class="tool-card" href="herramientas/contador-palabras.html">
+            <span class="tool-icon">🔢</span>
+            <span class="badge">Popular</span>
+            <h3>Contador de Palabras</h3>
+            <p>Cuenta palabras, caracteres, frases y tiempo de lectura.</p>
+            <span class="tool-link">Usar →</span>
+          </a>
+          <a class="tool-card" href="herramientas/generador-qr.html">
+            <span class="tool-icon">📱</span>
+            <span class="badge">Popular</span>
+            <h3>Generador de QR</h3>
+            <p>Genera códigos QR de cualquier texto o URL. Descarga PNG.</p>
+            <span class="tool-link">Usar →</span>
+          </a>
+          <a class="tool-card" href="herramientas/color-conversor.html">
+            <span class="tool-icon">🌈</span>
+            <h3>Conversor de Colores</h3>
+            <p>Nombre de color, HEX, RGB, HSL y previsualización.</p>
+            <span class="tool-link">Usar →</span>
+          </a>
+          <a class="tool-card" href="herramientas/calculadora-fechas.html">
+            <span class="tool-icon">📅</span>
+            <h3>Calculadora de Fechas</h3>
+            <p>Días entre fechas, sumar/restar días, día de la semana.</p>
+            <span class="tool-link">Usar →</span>
+          </a>
+          <a class="tool-card" href="herramientas/conversor-tiempo.html">
+            <span class="tool-icon">⏱️</span>
+            <h3>Conversor de Tiempo</h3>
+            <p>Segundos, minutos, horas, días, semanas y años.</p>
+            <span class="tool-link">Usar →</span>
+          </a>
+          <a class="tool-card" href="herramientas/conversor-bytes.html">
+            <span class="tool-icon">💾</span>
+            <h3>Conversor de Bytes</h3>
+            <p>Bits, bytes, KB, MB, GB, TB — conversión instantánea.</p>
+            <span class="tool-link">Usar →</span>
+          </a>
+          <a class="tool-card" href="herramientas/cambiar-caso.html">
+            <span class="tool-icon">🔤</span>
+            <h3>Mayúsculas / Minúsculas</h3>
+            <p>Cambia entre MAYÚSCULAS, minúsculas, Título y más.</p>
+            <span class="tool-link">Usar →</span>
+          </a>
+          <a class="tool-card" href="herramientas/texto-aleatorio.html">
+            <span class="tool-icon">🎰</span>
+            <h3>Texto Aleatorio</h3>
+            <p>Genera palabras, frases o párrafos aleatorios en español.</p>
+            <span class="tool-link">Usar →</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- Ad rectangle bottom -->
+      <div style="display:flex;justify-content:center;margin:2rem 0;">
+        <div class="ad-rectangle" id="ad-mid"></div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer (renderizado por JS) -->
+  <footer class="site-footer" id="site-footer"></footer>
+
+  <script src="js/app.js"></script>
+  <script>
+    // Hero search (separate instance)
+    document.addEventListener('DOMContentLoaded', () => {
+      initSearch('hero-search-input', 'hero-search-results');
+    });
+  </script>
+</body>
+</html>
