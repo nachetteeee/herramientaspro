@@ -183,27 +183,68 @@ function initCounters() {
   });
 }
 
-// --- Scroll animations (Airtable-style stagger) ---
+// --- Scroll animations ---
 function initScrollAnimations() {
-  const observer = new IntersectionObserver((entries) => {
+  // Cards observer — staggered per row of 4
+  const cardObs = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
+        cardObs.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.06, rootMargin: '0px 0px -30px 0px' });
+  }, { threshold: 0.05, rootMargin: '0px 0px -20px 0px' });
 
-  // Stagger tool cards and category cards
-  document.querySelectorAll('.tool-card, .category-card').forEach((el, i) => {
+  document.querySelectorAll('.tool-card').forEach((el, i) => {
     el.classList.add('animate-up');
-    el.style.transitionDelay = `${(i % 5) * 60}ms`;
-    observer.observe(el);
+    el.style.transitionDelay = `${(i % 4) * 80}ms`;
+    cardObs.observe(el);
   });
 
-  // Fade up any element with animate-up class already set
-  document.querySelectorAll('.animate-up:not(.tool-card):not(.category-card)').forEach(el => {
-    observer.observe(el);
+  // Category cards — slower, bigger
+  const catObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        catObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.category-card').forEach((el, i) => {
+    el.classList.add('animate-scale');
+    el.style.transitionDelay = `${i * 120}ms`;
+    catObs.observe(el);
+  });
+
+  // Section titles — slide in from left
+  const titleObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        titleObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  document.querySelectorAll('.section-title').forEach(el => {
+    el.classList.add('animate-left');
+    titleObs.observe(el);
+  });
+
+  // Ad banners — fade in
+  const adObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        adObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2 });
+
+  document.querySelectorAll('.ad-banner, .ad-rectangle').forEach(el => {
+    el.classList.add('animate-up');
+    adObs.observe(el);
   });
 }
 
