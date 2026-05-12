@@ -96,6 +96,122 @@ input, textarea, select { font-family: inherit; font-size: 1rem; }
   50%       { opacity: 1.0; transform: translateX(-50%) scale(1.15); }
 }
 
+/* ========================
+   GEOMETRIC FLOATING SHAPES
+   ======================== */
+.hero-shapes {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+.shape {
+  position: absolute;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,0.09);
+  backdrop-filter: blur(2px);
+  opacity: 0;
+}
+.shape::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 30%, rgba(255,255,255,0.18), transparent 65%);
+}
+
+/* Shape 1 — indigo, large, left */
+@keyframes shape1-enter {
+  from { opacity: 0; transform: translateY(-150px) rotate(-3deg); }
+  to   { opacity: 1; transform: translateY(0) rotate(12deg); }
+}
+@keyframes shape1-float {
+  0%, 100% { transform: translateY(0) rotate(12deg); }
+  50%       { transform: translateY(15px) rotate(12deg); }
+}
+.shape-1 {
+  width: 560px; height: 130px;
+  left: -5%; top: 22%;
+  background: linear-gradient(to right, rgba(99,102,241,0.18), transparent);
+  animation:
+    shape1-enter 2.4s 0.3s cubic-bezier(0.23, 0.86, 0.39, 0.96) forwards,
+    shape1-float 13s 2.7s ease-in-out infinite;
+}
+
+/* Shape 2 — pink, large, right-bottom */
+@keyframes shape2-enter {
+  from { opacity: 0; transform: translateY(-150px) rotate(-30deg); }
+  to   { opacity: 1; transform: translateY(0) rotate(-15deg); }
+}
+@keyframes shape2-float {
+  0%, 100% { transform: translateY(0) rotate(-15deg); }
+  50%       { transform: translateY(16px) rotate(-15deg); }
+}
+.shape-2 {
+  width: 460px; height: 112px;
+  right: -3%; top: 65%;
+  background: linear-gradient(to right, rgba(236,72,153,0.16), transparent);
+  animation:
+    shape2-enter 2.4s 0.5s cubic-bezier(0.23, 0.86, 0.39, 0.96) forwards,
+    shape2-float 13s 2.9s ease-in-out infinite;
+}
+
+/* Shape 3 — violet, medium, bottom-left */
+@keyframes shape3-enter {
+  from { opacity: 0; transform: translateY(-150px) rotate(-23deg); }
+  to   { opacity: 1; transform: translateY(0) rotate(-8deg); }
+}
+@keyframes shape3-float {
+  0%, 100% { transform: translateY(0) rotate(-8deg); }
+  50%       { transform: translateY(14px) rotate(-8deg); }
+}
+.shape-3 {
+  width: 280px; height: 75px;
+  left: 8%; bottom: 10%;
+  background: linear-gradient(to right, rgba(168,85,247,0.15), transparent);
+  animation:
+    shape3-enter 2.4s 0.4s cubic-bezier(0.23, 0.86, 0.39, 0.96) forwards,
+    shape3-float 11s 2.8s ease-in-out infinite;
+}
+
+/* Shape 4 — pink, small, top-right */
+@keyframes shape4-enter {
+  from { opacity: 0; transform: translateY(-150px) rotate(5deg); }
+  to   { opacity: 1; transform: translateY(0) rotate(20deg); }
+}
+@keyframes shape4-float {
+  0%, 100% { transform: translateY(0) rotate(20deg); }
+  50%       { transform: translateY(12px) rotate(20deg); }
+}
+.shape-4 {
+  width: 190px; height: 55px;
+  right: 18%; top: 13%;
+  background: linear-gradient(to right, rgba(236,72,153,0.13), transparent);
+  animation:
+    shape4-enter 2.4s 0.6s cubic-bezier(0.23, 0.86, 0.39, 0.96) forwards,
+    shape4-float 10s 3.0s ease-in-out infinite;
+}
+
+/* Shape 5 — indigo, tiny, top-center-left */
+@keyframes shape5-enter {
+  from { opacity: 0; transform: translateY(-150px) rotate(-40deg); }
+  to   { opacity: 1; transform: translateY(0) rotate(-25deg); }
+}
+@keyframes shape5-float {
+  0%, 100% { transform: translateY(0) rotate(-25deg); }
+  50%       { transform: translateY(11px) rotate(-25deg); }
+}
+.shape-5 {
+  width: 140px; height: 38px;
+  left: 23%; top: 7%;
+  background: linear-gradient(to right, rgba(99,102,241,0.12), transparent);
+  animation:
+    shape5-enter 2.4s 0.7s cubic-bezier(0.23, 0.86, 0.39, 0.96) forwards,
+    shape5-float 10s 3.1s ease-in-out infinite;
+}
+
+/* Hero content sits above shapes */
+
 /* Scroll-triggered elements */
 .animate-up {
   opacity: 0;
@@ -126,6 +242,8 @@ input, textarea, select { font-family: inherit; font-size: 1rem; }
 /* Hero animates immediately on load */
 .hero-animate {
   animation: fadeInUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+  position: relative;
+  z-index: 2;
 }
 .hero-animate:nth-child(1) { animation-delay: 0ms; }
 .hero-animate:nth-child(2) { animation-delay: 100ms; }
@@ -336,7 +454,10 @@ input, textarea, select { font-family: inherit; font-size: 1rem; }
 }
 .hero h1 em {
   font-style: normal;
-  color: var(--accent);
+  background: linear-gradient(to right, #a5b4fc, rgba(255,255,255,0.92) 48%, #fda4af);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 .hero p {
   color: var(--text2);
@@ -965,6 +1086,11 @@ input, textarea, select { font-family: inherit; font-size: 1rem; }
 /* Disable tilt and ambient on mobile */
 @media (hover: none), (max-width: 768px) {
   .ambient-orb { display: none; }
+}
+@media (max-width: 768px) {
+  .shape-1 { width: 280px; height: 68px; left: -8%; }
+  .shape-2 { width: 240px; height: 60px; right: -5%; }
+  .shape-3, .shape-4, .shape-5 { display: none; }
 }
 
 /* ========================
