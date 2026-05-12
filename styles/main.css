@@ -4,22 +4,22 @@
 
 /* --- Variables --- */
 :root {
-  --bg: #0f172a;
-  --bg2: #1e293b;
-  --bg3: #263548;
-  --accent: #6366f1;
-  --accent2: #4f46e5;
-  --accent-glow: rgba(99,102,241,0.15);
-  --text: #f1f5f9;
-  --text2: #94a3b8;
-  --text3: #64748b;
-  --border: #334155;
-  --success: #10b981;
+  --bg: #0c0c0e;
+  --bg2: #111113;
+  --bg3: #18181b;
+  --accent: #f59e0b;
+  --accent2: #d97706;
+  --accent-glow: rgba(245,158,11,0.08);
+  --text: #fafafa;
+  --text2: #a1a1aa;
+  --text3: #71717a;
+  --border: #27272a;
+  --success: #22c55e;
   --error: #ef4444;
   --warn: #f59e0b;
-  --radius: 10px;
-  --radius-sm: 6px;
-  --shadow: 0 4px 24px rgba(0,0,0,0.3);
+  --radius: 7px;
+  --radius-sm: 4px;
+  --shadow: 0 1px 16px rgba(0,0,0,0.5);
   --font: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
@@ -44,8 +44,8 @@ input, textarea, select {
 
 /* --- Header --- */
 .site-header {
-  background: rgba(15,23,42,0.95);
-  backdrop-filter: blur(12px);
+  background: rgba(12,12,14,0.97);
+  backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--border);
   position: sticky;
   top: 0;
@@ -154,22 +154,28 @@ input, textarea, select {
   padding: 4rem 0 2rem;
   text-align: center;
 }
+.hero-badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.3rem 0.85rem;
+  border-radius: 50px;
+  border: 1px solid var(--border);
+  color: var(--text2);
+  margin-bottom: 1.25rem;
+  letter-spacing: 0.02em;
+}
 .hero h1 {
   font-size: clamp(2rem, 5vw, 3.5rem);
   font-weight: 800;
   line-height: 1.15;
   margin-bottom: 1rem;
-  background: linear-gradient(135deg, var(--text) 0%, var(--text2) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--text);
+  letter-spacing: -0.02em;
 }
 .hero h1 em {
   font-style: normal;
-  background: linear-gradient(135deg, var(--accent) 0%, #a78bfa 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--accent);
 }
 .hero p {
   color: var(--text2);
@@ -240,12 +246,12 @@ input, textarea, select {
 .category-card:hover {
   border-color: var(--accent);
   background: var(--bg3);
-  transform: translateY(-2px);
 }
 .category-card .cat-icon {
   font-size: 2rem;
   margin-bottom: 0.75rem;
   display: block;
+  color: var(--accent);
 }
 .category-card h3 {
   font-size: 1.1rem;
@@ -283,7 +289,6 @@ input, textarea, select {
 .tool-card:hover {
   border-color: var(--accent);
   background: var(--bg3);
-  transform: translateY(-2px);
 }
 .tool-card .tool-icon {
   font-size: 1.5rem;
@@ -311,11 +316,13 @@ input, textarea, select {
 .badge {
   display: inline-block;
   font-size: 0.65rem;
-  font-weight: 700;
+  font-weight: 600;
   text-transform: uppercase;
+  letter-spacing: 0.05em;
   padding: 0.15rem 0.5rem;
-  border-radius: 50px;
-  background: var(--accent-glow);
+  border-radius: 3px;
+  background: transparent;
+  border: 1px solid var(--accent);
   color: var(--accent);
   margin-bottom: 0.25rem;
 }
@@ -360,16 +367,19 @@ input, textarea, select {
   overflow: hidden;
 }
 .tool-box-header {
-  padding: 1rem 1.25rem;
+  padding: 0.85rem 1.25rem;
   border-bottom: 1px solid var(--border);
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border-left: 3px solid var(--accent);
 }
 .tool-box-header h2 {
-  font-size: 0.95rem;
-  font-weight: 700;
+  font-size: 0.875rem;
+  font-weight: 600;
   color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 .tool-box-body { padding: 1.25rem; }
 
