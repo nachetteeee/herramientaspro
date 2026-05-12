@@ -1037,6 +1037,72 @@ input, textarea, select { font-family: inherit; font-size: 1rem; }
 .search-result-item .sri-cat { color: var(--text3); font-size: 0.72rem; }
 
 /* ========================
+   SEO CONTENT: HOW-TO + FAQ
+   ======================== */
+.seo-section { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 1rem; }
+.seo-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem 1.75rem;
+}
+.seo-h2 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 1rem;
+  letter-spacing: 0.01em;
+}
+.seo-steps {
+  color: var(--text2);
+  font-size: 0.875rem;
+  line-height: 1.7;
+  padding-left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.seo-steps strong { color: var(--text); }
+.faq-list { display: flex; flex-direction: column; gap: 0.5rem; }
+.faq-item {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+.faq-item summary {
+  padding: 0.85rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text);
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  user-select: none;
+  transition: background 0.15s;
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after {
+  content: '+';
+  font-size: 1.1rem;
+  color: var(--accent);
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+.faq-item[open] summary::after { transform: rotate(45deg); }
+.faq-item summary:hover { background: var(--bg3); }
+.faq-item[open] summary { background: var(--bg3); border-bottom: 1px solid var(--border); }
+.faq-item p {
+  padding: 1rem;
+  font-size: 0.85rem;
+  color: var(--text2);
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* ========================
    AMBIENT SCROLL ORBS
    ======================== */
 .ambient-orb {
