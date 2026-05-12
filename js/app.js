@@ -248,6 +248,65 @@ function initScrollAnimations() {
   });
 }
 
+// --- Ambient scroll orbs (purple + pink blobs that drift on scroll) ---
+function initAmbientOrbs() {
+  const purple = document.createElement('div');
+  purple.className = 'ambient-orb ambient-orb-purple';
+  const pink = document.createElement('div');
+  pink.className = 'ambient-orb ambient-orb-pink';
+  document.body.appendChild(purple);
+  document.body.appendChild(pink);
+
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      const sy = window.scrollY;
+      // Purple drifts down-left as page scrolls
+      purple.style.transform = `translate(${sy * -0.04}px, ${sy * 0.18}px)`;
+      // Pink drifts up-right (opposite direction)
+      pink.style.transform   = `translate(${sy * 0.06}px, ${sy * -0.12}px)`;
+      // Also update hero glow parallax via CSS custom property
+      document.documentElement.style.setProperty('--scroll-hero', `${sy * 0.28}px`);
+      ticking = false;
+    });
+  }, { passive: true });
+}
+
+// --- 3D card tilt on mousemove (desktop only) ---
+function initCardTilt() {
+  if (!window.matchMedia('(hover: hover)').matches) return;
+
+  const MAX_ROT = 6; // degrees
+  const ease    = 0.4; // transition time in seconds
+
+  document.querySelectorAll('.tool-card, .category-card').forEach(card => {
+    let animId;
+
+    card.addEventListener('mousemove', (e) => {
+      cancelAnimationFrame(animId);
+      animId = requestAnimationFrame(() => {
+        const rect = card.getBoundingClientRect();
+        const x  = e.clientX - rect.left;
+        const y  = e.clientY - rect.top;
+        const cx = rect.width  / 2;
+        const cy = rect.height / 2;
+        const rotX = ((y - cy) / cy) * -MAX_ROT;
+        const rotY = ((x - cx) / cx) *  MAX_ROT;
+        card.style.transition = `border-color 0.25s, box-shadow 0.25s, transform 0.08s`;
+        card.style.transform  = `perspective(700px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateZ(6px)`;
+      });
+    });
+
+    card.addEventListener('mouseleave', () => {
+      cancelAnimationFrame(animId);
+      card.style.transition = `border-color 0.25s, box-shadow 0.25s, transform ${ease}s cubic-bezier(0.23, 1, 0.32, 1)`;
+      card.style.transform  = '';
+    });
+  });
+}
+
 // --- Init on DOM ready ---
 document.addEventListener('DOMContentLoaded', () => {
   renderHeader();
@@ -256,7 +315,9 @@ document.addEventListener('DOMContentLoaded', () => {
   renderAd('ad-top', 'banner');
   renderAd('ad-sidebar', 'sidebar');
   renderAd('ad-mid', 'rectangle');
-  // Start scroll animations + counters
+  // Scroll animations + counters + premium effects
   initScrollAnimations();
   initCounters();
+  initAmbientOrbs();
+  initCardTilt();
 });
