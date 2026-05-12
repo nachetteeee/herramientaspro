@@ -143,6 +143,30 @@ function renderAd(containerId, type = 'banner') {
   el.innerHTML = `<span>${labels[type] || 'Anuncio'}<br><small>Espacio publicitario de Google AdSense</small></span>`;
 }
 
+// --- Scroll animations (Airtable-style stagger) ---
+function initScrollAnimations() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+  // Stagger tool cards and category cards
+  document.querySelectorAll('.tool-card, .category-card').forEach((el, i) => {
+    el.classList.add('animate-up');
+    el.style.transitionDelay = `${(i % 5) * 55}ms`;
+    observer.observe(el);
+  });
+
+  // Fade up any element with animate-up class
+  document.querySelectorAll('.animate-up:not(.tool-card):not(.category-card)').forEach(el => {
+    observer.observe(el);
+  });
+}
+
 // --- Init on DOM ready ---
 document.addEventListener('DOMContentLoaded', () => {
   renderHeader();
@@ -151,4 +175,6 @@ document.addEventListener('DOMContentLoaded', () => {
   renderAd('ad-top', 'banner');
   renderAd('ad-sidebar', 'sidebar');
   renderAd('ad-mid', 'rectangle');
+  // Start scroll animations
+  initScrollAnimations();
 });
