@@ -250,6 +250,9 @@ function initScrollAnimations() {
 
 // --- Ambient scroll orbs (purple + pink blobs that drift on scroll) ---
 function initAmbientOrbs() {
+  // Skip on mobile — orbs hidden via CSS anyway, no point burning battery
+  if (window.matchMedia('(max-width: 768px)').matches) return;
+
   const purple = document.createElement('div');
   purple.className = 'ambient-orb ambient-orb-purple';
   const pink = document.createElement('div');
@@ -263,11 +266,8 @@ function initAmbientOrbs() {
     ticking = true;
     requestAnimationFrame(() => {
       const sy = window.scrollY;
-      // Purple drifts down-left as page scrolls
       purple.style.transform = `translate(${sy * -0.04}px, ${sy * 0.18}px)`;
-      // Pink drifts up-right (opposite direction)
       pink.style.transform   = `translate(${sy * 0.06}px, ${sy * -0.12}px)`;
-      // Also update hero glow parallax via CSS custom property
       document.documentElement.style.setProperty('--scroll-hero', `${sy * 0.28}px`);
       ticking = false;
     });
