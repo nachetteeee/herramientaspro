@@ -3,19 +3,19 @@
 
   <!-- Páginas principales -->
   <url>
-    <loc>https://herramientaspro-blond.vercel.app/</loc>
+    <loc>https://herramientasproapp.com/</loc>
     <lastmod>2026-05-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://herramientaspro-blond.vercel.app/acerca.html</loc>
+    <loc>https://herramientasproapp.com/acerca.html</loc>
     <lastmod>2026-05-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
-    <loc>https://herramientaspro-blond.vercel.app/privacidad.html</loc>
+    <loc>https://herramientasproapp.com/privacidad.html</loc>
     <lastmod>2026-05-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
@@ -23,61 +23,61 @@
 
   <!-- Dev Tools -->
   <url>
-    <loc>https://herramientaspro-blond.vercel.app/herramientas/generador-contrasenas.html</loc>
+    <loc>https://herramientasproapp.com/herramientas/generador-contrasenas.html</loc>
     <lastmod>2026-05-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://herramientaspro-blond.vercel.app/herramientas/base64.html</loc>
+    <loc>https://herramientasproapp.com/herramientas/base64.html</loc>
     <lastmod>2026-05-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://herramientaspro-blond.vercel.app/herramientas/json-formateador.html</loc>
+    <loc>https://herramientasproapp.com/herramientas/json-formateador.html</loc>
     <lastmod>2026-05-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://herramientaspro-blond.vercel.app/herramientas/uuid.html</loc>
+    <loc>https://herramientasproapp.com/herramientas/uuid.html</loc>
     <lastmod>2026-05-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://herramientaspro-blond.vercel.app/herramientas/color-conversor.html</loc>
+    <loc>https://herramientasproapp.com/herramientas/color-conversor.html</loc>
     <lastmod>2026-05-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://herramientaspro-blond.vercel.app/herramientas/url-encoder.html</loc>
+    <loc>https://herramientasproapp.com/herramientas/url-encoder.html</loc>
     <lastmod>2026-05-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://herramientaspro-blond.vercel.app/herramientas/conversor-numerico.html</loc>
+    <loc>https://herramientasproapp.com/herramientas/conversor-numerico.html</loc>
     <lastmod>2026-05-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://herramientaspro-blond.vercel.app/herramientas/lorem-ipsum.html</loc>
+    <loc>https://herramientasproapp.com/herramientas/lorem-ipsum.html</loc>
     <lastmod>2026-05-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://herramientaspro-blond.vercel.app/herramientas/minificador.html</loc>
+    <loc>https://herramientasproapp.com/herramientas/minificador.html</loc>
     <lastmod>2026-05-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://herramientaspro-blond.vercel.app/herramientas/diff-texto.html</loc>
+    <loc>https://herramientasproapp.com/herramientas/diff-texto.html</loc>
     <lastmod>2026-05-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -85,55 +85,55 @@
 
   <!-- Herramientas Generales -->
   <url>
-    <loc>https://herramientaspro-blond.vercel.app/herramientas/contador-palabras.html</loc>
+    <loc>https://herramientasproapp.com/herramientas/contador-palabras.html</loc>
     <lastmod>2026-05-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://herramientaspro-blond.vercel.app/herramientas/generador-qr.html</loc>
+    <loc>https://herramientasproapp.com/herramientas/generador-qr.html</loc>
     <lastmod>2026-05-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://herramientaspro-blond.vercel.app/herramientas/conversor-unidades.html</loc>
+    <loc>https://herramientasproapp.com/herramientas/conversor-unidades.html</loc>
     <lastmod>2026-05-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://herramientaspro-blond.vercel.app/herramientas/porcentajes.html</loc>
+    <loc>https://herramientasproapp.com/herramientas/porcentajes.html</loc>
     <lastmod>2026-05-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://herramientaspro-blond.vercel.app/herramientas/calculadora-fechas.html</loc>
+    <loc>https://herramientasproapp.com/herramientas/calculadora-fechas.html</loc>
     <lastmod>2026-05-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://herramientaspro-blond.vercel.app/herramientas/conversor-tiempo.html</loc>
+    <loc>https://herramientasproapp.com/herramientas/conversor-tiempo.html</loc>
     <lastmod>2026-05-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://herramientaspro-blond.vercel.app/herramientas/conversor-bytes.html</loc>
+    <loc>https://herramientasproapp.com/herramientas/conversor-bytes.html</loc>
     <lastmod>2026-05-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://herramientaspro-blond.vercel.app/herramientas/cambiar-caso.html</loc>
+    <loc>https://herramientasproapp.com/herramientas/cambiar-caso.html</loc>
     <lastmod>2026-05-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://herramientaspro-blond.vercel.app/herramientas/texto-aleatorio.html</loc>
+    <loc>https://herramientasproapp.com/herramientas/texto-aleatorio.html</loc>
     <lastmod>2026-05-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
