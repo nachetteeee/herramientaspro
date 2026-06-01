@@ -60,6 +60,7 @@ function renderFooter() {
       <nav class="footer-links">
         <a href="/">Inicio</a>
         <a href="/acerca.html">Acerca</a>
+        <a href="/contacto.html">Contacto</a>
         <a href="/privacidad.html">Privacidad</a>
       </nav>
     </div>
